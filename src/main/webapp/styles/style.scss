@@ -24,7 +24,7 @@ body{
     background-repeat: no-repeat;
 }
 .header{
-    height: 117px;
+    height: 80px;
     display: flex;
     justify-content: space-between;
     box-shadow: 0px 1px 0px 0px #918d88;
@@ -250,12 +250,16 @@ footer{
         color: #afafaf;
     }
     
-    button{
-        margin: 20px 0 0 0;
-        border: 1px solid #000000;
-        background-color: transparent;
-    }
+    
 }
+.submit-creation{
+    margin: 20px 0 0 0;
+    border: 1px solid #000000;
+    background-color: transparent;
+}
+
+
+
 
 
 

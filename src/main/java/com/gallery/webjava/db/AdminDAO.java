@@ -21,10 +21,13 @@ public class AdminDAO {
     public void createAdmin(Administrator admin) {
         Connection connection = null;
         PreparedStatement ps;
+        String encodedPassword = Encoder.encode(admin.getPassword());
         try {
             connection = DBManager.getInstance().getConnection();
             ps = connection.prepareStatement(CREATE_ADMINISTRATOR);
             ps.setString(1, admin.getName());
+            ps.setString(2,admin.getEmail());
+            ps.setString(3,admin.getPassword());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Can`t create Administrator");
@@ -89,6 +92,30 @@ public class AdminDAO {
             }
         } catch (SQLException e) {
             System.out.println("Cant get Administrator by EMAIL");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+        return admin;
+    }
+
+    public Administrator getAdmin(String email, String password){
+        Administrator admin = null;
+        Connection connection = null;
+        PreparedStatement ps;
+        ResultSet rs;
+        AdminMapper mapper = new AdminMapper();
+        try {
+            connection = DBManager.getInstance().getConnection();
+            ps = connection.prepareStatement(GET_ADMIN);
+            ps.setString(1, email);
+            ps.setString(2, Encoder.encode(password));
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                admin = mapper.mapRow(rs);
+            }
+        } catch (SQLException e) {
+            System.out.println("Cant get Administrator by EMAIL and PASSWORD");
             e.printStackTrace();
         } finally {
             DBManager.getInstance().commitAndClose(connection);

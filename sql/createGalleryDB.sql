@@ -52,7 +52,7 @@ exposition_id int default 0
 
 create table hall_exposition(
 hall_id int,
-exposition_id int unique,
+exposition_id int,
 FOREIGN KEY (hall_id) references hall (id),
 FOREIGN KEY (exposition_id) references exposition (id)
 );
@@ -69,7 +69,8 @@ FOREIGN KEY (user_id) references user (id)
 insert into language (name) values ('english');
 insert into language (name) values ('ukrainian');
 
-insert into admin (name,email,password) values('Default Administrator','admin@admin.com','qwe123qwe');
+insert into admin (name,email,password) values('Default Administrator','admin@admin.com','81DC9BDB52D04DC20036DBD8313ED055');
+insert into user (name,email,password) values('Default User','user@user.com','1234');
 INSERT INTO hall (name) VALUES ('The Great Hall'),('The Grey Hall'),('The Katato Hall');
 INSERT INTO exposition (name,start_date,end_date,price,language_id) values 
 	("GRISHIGIANO. Simplicity is the highest form of sophistication", "2021-08-08", "2021-09-12", 500, 1),
@@ -82,4 +83,5 @@ select * from ticket;
 select * from exposition;
 select * from hall;
 select * from user;
+select * from admin where email = 'admin@admin.com' and password = '81DC9BDB52D04DC20036DBD8313ED055';
 

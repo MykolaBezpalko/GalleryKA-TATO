@@ -26,20 +26,26 @@
         <p class="allready-have">Log in to continue. have no account?</p>
         <p class="to-login"><a href="http://localhost:8080/gallery/create-account">Register</a></p>
 
-        <form id="create-account"action="check-data" method="POST">
+        <form id="create-account" action="check-data" method="POST">
             <div class="field"> <p>E-MAIL</p>
                 <input type="email" name="email" placeholder="Your e-mail" form="create-account"  pattern="[^ @]*@[^ @]*" required></div>
 
             <div class="field"><p>PASSWORD</p>
                 <input type="password" name="password" placeholder="Your password" form="create-account"  pattern="[A-Za-z0-9]{4,16}" title="min: 4 max: 16 (Lattin and numbers)"  required></div>
 
-            <div class="field" style="width: 50%;"><button class="submit-creation" type="submit" form="create-account">
-                LOG IN
-            </button></div>
-
+            <div class="field" style="width: 50%;">
+                <button class="submit-creation" type="submit" form="create-account">
+                    LOG IN
+                </button>
+                <button class="submit-creation" form="logadmin">
+                    LOG IN AS ADMINISTRATOR
+                </button>
+            </div>
         </form>
+        <form id="logadmin" action="http://localhost:8080/gallery/login-as-admin.html"></form>
 
     </div>
 </section>
+
 </body>
 </html>
