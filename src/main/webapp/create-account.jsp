@@ -11,7 +11,7 @@
               integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="./pages/styles/style.css" type="text/css">
     </head>
 </head>
 <body>
@@ -20,7 +20,7 @@
     </div>
     <div class="fields">
         <div class="close"><a href="http://localhost:8080/gallery">
-            <img src="styles/images/close.png" alt="" style="  width: 30px;
+            <img src="./pages/styles/images/close.png" alt="" style="  width: 30px;
             height: 30px">
         </a></div>
         <p class="create-account">CREATE ACCOUNT</p>

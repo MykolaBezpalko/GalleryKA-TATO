@@ -1,10 +1,10 @@
 @font-face {
     font-family: "Kudryashev Display";
-    src: url("../../styles/fonts/Kudryashev-Display.otf");
+    src: url("../styles/fonts/Kudryashev-Display.otf");
 }
 @font-face {
     font-family: "Apercu Pro";
-    src: url("../../styles/fonts/ApercuPro-Regular.otf");
+    src: url("../styles/fonts/ApercuPro-Regular.otf");
 }
 body{
     font-size: 35px;
@@ -26,5 +26,5 @@ a{
 
 .back-to-main{
     position: relative;
-    top: 200px;
+    top: 100px;
 }
