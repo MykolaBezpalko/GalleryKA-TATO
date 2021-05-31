@@ -8,6 +8,16 @@
     <request-character-encoding>windows-1251</request-character-encoding>
     <response-character-encoding>windows-1251</response-character-encoding>
 
+<!--    <filter>-->
+<!--        <filter-name>liginFilter</filter-name>-->
+<!--        <filter-class>com.gallery.webjava.web.filter.LoginFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>liginFilter</filter-name>-->
+<!--&lt;!&ndash;        <url-pattern>/*</url-pattern>&ndash;&gt;-->
+<!--        <servlet-name>LoginServlet</servlet-name>-->
+<!--    </filter-mapping>-->
+
     <servlet>
         <servlet-name>create-account</servlet-name>
         <jsp-file>/create-account.jsp</jsp-file>
@@ -28,7 +38,7 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.gallery.webjava.LoginServlet</servlet-class>
+        <servlet-class>com.gallery.webjava.web.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>

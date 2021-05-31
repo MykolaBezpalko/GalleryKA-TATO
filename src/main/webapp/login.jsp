@@ -14,7 +14,6 @@
     </head>
 </head>
 <body>
-<%session.setAttribute("email","not-login");%>
 <section class="create-body">
     <div class="picture">
     </div>

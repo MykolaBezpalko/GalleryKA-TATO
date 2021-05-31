@@ -1,6 +1,6 @@
 package com.gallery.webjava.db;
 
-import com.gallery.webjava.Mapper;
+import com.gallery.webjava.web.Mapper;
 import com.gallery.webjava.db.entity.*;
 
 import static com.gallery.webjava.db.Constants.*;
@@ -26,8 +26,8 @@ public class AdminDAO {
             connection = DBManager.getInstance().getConnection();
             ps = connection.prepareStatement(CREATE_ADMINISTRATOR);
             ps.setString(1, admin.getName());
-            ps.setString(2,admin.getEmail());
-            ps.setString(3,admin.getPassword());
+            ps.setString(2, admin.getEmail());
+            ps.setString(3, admin.getPassword());
             ps.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Can`t create Administrator");
@@ -99,7 +99,7 @@ public class AdminDAO {
         return admin;
     }
 
-    public Administrator getAdmin(String email, String password){
+    public Administrator getAdmin(String email, String password) {
         Administrator admin = null;
         Connection connection = null;
         PreparedStatement ps;
@@ -371,7 +371,7 @@ public class AdminDAO {
         return allLanguages;
     }
 
-    public Exposition getExpositionByName(String theme){
+    public Exposition getExpositionByName(String theme) {
         Exposition expo = new Exposition();
         Connection connection = null;
         PreparedStatement ps = null;
@@ -395,7 +395,7 @@ public class AdminDAO {
         return expo;
     }
 
-    public List<Exposition> getAllExpositions(){
+    public List<Exposition> getAllExpositions() {
         List<Exposition> allExpo = new ArrayList<>();
         Connection connection = null;
         ExpositionMapper mapper = new ExpositionMapper();
@@ -416,6 +416,98 @@ public class AdminDAO {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allExpo;
+    }
+
+    /**
+     * Insert new line into exposition table, all fields getting from CreateExpo
+     *
+     * @param exposition object created by Administrator cabinet
+     */
+    public void createExposition(Exposition exposition) {
+        Connection connection = null;
+        PreparedStatement ps;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            ps = connection.prepareStatement(INSERT_EXPO);
+            ps.setString(1, exposition.getTheme());
+            //change
+            ps.setDate(2, java.sql.Date.valueOf(exposition.getBegin().toString()));
+            //change
+            ps.setDate(3, java.sql.Date.valueOf(exposition.getEnd().toString()));
+
+            ps.setInt(4, exposition.getPrice());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Can`t insert new expo in database");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+    }
+
+    public Integer getExpoId(String name) {
+        Integer id = null;
+        Connection connection = null;
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            ps = connection.prepareStatement(GET_EXPO_ID);
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt(ID);
+            }
+
+            if (id == null) {
+                throw new IllegalStateException();
+            }
+        } catch (IllegalStateException | SQLException e) {
+            System.out.println("Cant get Exposition ID");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+
+        return id;
+    }
+
+    public void settHallsForExpo(Exposition expo, List<Hall> halls) {
+        Connection conn = null;
+        PreparedStatement ps;
+        try {
+            conn = DBManager.getInstance().getConnection();
+            for (Hall hall : halls) {
+                ps = conn.prepareStatement(INSERT_EXPO_ID);
+                ps.setInt(1, hall.getId());
+                ps.setInt(2, expo.getId());
+                ps.executeUpdate();
+            }
+
+        } catch (SQLException throwables) {
+            System.out.println("cant insert halls for exposition");
+            throwables.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(conn);
+        }
+    }
+
+    public void setDescriptions(Exposition exposition, String description, int language) {
+        Connection conn = null;
+        PreparedStatement ps;
+        try {
+            conn = DBManager.getInstance().getConnection();
+            ps = conn.prepareStatement(INSERT_DESCRIPTION);
+            ps.setInt(1,exposition.getId());
+            ps.setString(2,description);
+            ps.setInt(3,language);
+            System.out.println(description);
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally{
+            DBManager.getInstance().commitAndClose(conn);
+        }
     }
 
     /**
@@ -449,7 +541,6 @@ public class AdminDAO {
             try {
                 hall.setId(resultSet.getInt(ID));
                 hall.setHallName(resultSet.getString(NAME));
-                hall.setId(resultSet.getInt(ID));
             } catch (SQLException e) {
                 System.err.println("cant map Hall");
                 e.printStackTrace();
@@ -486,7 +577,6 @@ public class AdminDAO {
         @Override
         public Exposition mapRow(ResultSet resultSet) {
             Exposition exposition = new Exposition();
-//            LanguageMapper lgm = new LanguageMapper();
             try {
                 exposition.setId(resultSet.getInt(ID));
                 exposition.setTheme(resultSet.getString(NAME));
@@ -494,8 +584,6 @@ public class AdminDAO {
                 exposition.setEnd(resultSet.getDate(END_DATE));
                 exposition.setPrice(resultSet.getInt(PRICE));
                 exposition.setAvailable(resultSet.getBoolean(AVAILABLE));
-                exposition.setLanguage(new AdminDAO().getLanguageById(resultSet.getInt(LANGUAGE_ID)));
-//                exposition.setLanguage(lgm.mapRow(resultSet));
             } catch (SQLException e) {
                 System.err.println("Can`t map exposition");
                 e.printStackTrace();

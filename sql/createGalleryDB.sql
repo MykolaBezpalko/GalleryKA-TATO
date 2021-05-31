@@ -38,16 +38,13 @@ name varchar(300) not null,
 start_date date,
 end_date date,
 price int default 0,
-language_id int default 0,
-available boolean default true,
-FOREIGN KEY (language_id) references language (id)
+available boolean default true
 );
 ALTER TABLE description ADD CONSTRAINT exposition_id FOREIGN KEY (exposition_id) REFERENCES exposition(id);
 
 create table hall(
 id int not null primary key auto_increment,
-name varchar(50) not null,
-exposition_id int default 0
+name varchar(50) not null
 );
 
 create table hall_exposition(
@@ -72,16 +69,19 @@ insert into language (name) values ('ukrainian');
 insert into admin (name,email,password) values('Default Administrator','admin@admin.com','81DC9BDB52D04DC20036DBD8313ED055');
 insert into user (name,email,password) values('Default User','user@user.com','1234');
 INSERT INTO hall (name) VALUES ('The Great Hall'),('The Grey Hall'),('The Katato Hall');
-INSERT INTO exposition (name,start_date,end_date,price,language_id) values 
-	("GRISHIGIANO. Simplicity is the highest form of sophistication", "2021-08-08", "2021-09-12", 500, 1),
-    ("EGENHÄNDIGT. Ceramics sculptures and scandi style", "2021-08-13", "2021-08-28", 450, 1),
-	("National Institute of American Doll Artists. Art & dolls", "2021-08-25", "2021-09-15", 420, 1),
-	("KRISTIINA HAATAJA. Ancient Cubism", "2021-08-25", "2021-09-25", 400, 1);
+INSERT INTO exposition (name,start_date,end_date,price) values 
+	("GRISHIGIANO. Simplicity is the highest form of sophistication", "2021-08-08", "2021-09-12", 500),
+    ("EGENHÄNDIGT. Ceramics sculptures and scandi style", "2021-08-13", "2021-08-28", 450),
+	("National Institute of American Doll Artists. Art & dolls", "2021-08-25", "2021-09-15", 420),
+	("KRISTIINA HAATAJA. Ancient Cubism", "2021-08-25", "2021-09-25", 400);
+use gallery;
 select * from admin;
 select * from language;
 select * from ticket;
 select * from exposition;
 select * from hall;
 select * from user;
-select * from admin where email = 'admin@admin.com' and password = '81DC9BDB52D04DC20036DBD8313ED055';
+select * from description;
+
+select * from hall_exposition;
 

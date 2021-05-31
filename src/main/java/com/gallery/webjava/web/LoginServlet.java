@@ -1,4 +1,4 @@
-package com.gallery.webjava;
+package com.gallery.webjava.web;
 
 import com.gallery.webjava.db.AdminDAO;
 import com.gallery.webjava.db.Encoder;
@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             String password = session.getAttribute("password").toString();
             User user = new UserDAO().getUserByEmail(email);
+            session.setAttribute("user", user);
             if (user != null) {
                 writer.println(user);
             } else {
@@ -43,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 
     }
 
-    public boolean checkUser(String email) {
+    public static boolean checkUser(String email) {
         User u = new UserDAO().getUserByEmail(email);
         if (u != null) {
             return true;

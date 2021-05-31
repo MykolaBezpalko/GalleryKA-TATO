@@ -1,0 +1,336 @@
+@font-face {
+  font-family: "Apercu Pro";
+  src: url("fonts/ApercuPro-Regular.otf");
+}
+
+@font-face {
+  font-family: "Kudryashev Display";
+  src: url("fonts/Kudryashev-Display.otf");
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  min-width: 269px;
+  background-color: #FAF5EF;
+}
+
+.cabinet-body {
+  height: 630px;
+}
+
+.cabinet-body .header .navbar-light .navbar-toggler {
+  color: rgba(0, 0, 0, 0.55);
+  border-color: #8F755D;
+}
+
+.cabinet-body .header .navbar-brand {
+  color: #8F755D;
+}
+
+.header {
+  height: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-shadow: 0 1px 0 0 #918d88;
+          box-shadow: 0 1px 0 0 #918d88;
+}
+
+.menu {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 60%;
+  font-family: 'Apercu Pro', serif;
+  letter-spacing: 4px;
+}
+
+.navbar-light .navbar-toggler {
+  color: rgba(0, 0, 0, 0.55);
+  border-color: #FDDABA;
+}
+
+.navbar-brand {
+  display: block;
+  width: 262px;
+  text-align: center;
+}
+
+.navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover {
+  color: #FDDABA;
+}
+
+.collapse {
+  -ms-flex-line-pack: stretch;
+      align-content: stretch;
+}
+
+.navbar-expand-lg .navbar-nav {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.navbar-light .navbar-brand {
+  color: #FDDABA;
+  font-size: 20px;
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+  color: #FDDABA;
+}
+
+.navbar-light .navbar-nav, .navbar-light .navbar-nav .show > .nav-link {
+  font-size: 17px;
+  margin-top: -2px;
+}
+
+.navbar-light .navbar-nav, .navbar-light .navbar-nav .show > .nav-link > .nav-link {
+  font-size: 17px;
+  margin-top: -2px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  display: block;
+  text-align: center;
+  font-size: 15px;
+}
+
+.mainButtons {
+  width: 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.mainButtons form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.btn {
+  color: #8F755D;
+}
+
+.btn:hover {
+  color: #8F755D;
+  border: 2px solid #8F755D;
+  border-radius: 5px;
+}
+
+.body-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.body-content .cabinet-menu {
+  width: 15%;
+  height: 690px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border-right: 2px solid #918D88;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-top: 76px;
+}
+
+.body-content .cabinet-menu a {
+  display: block;
+}
+
+.body-content .cabinet-menu .photo {
+  background-image: url("images/f2f431e127ff9dc61b9fd845f3adb0dc.jpg");
+  width: 120px;
+  height: 120px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 60px;
+}
+
+.body-content .cabinet-menu .role {
+  padding-left: 10px;
+  margin-top: 20px;
+  font-family: "Apercu Pro";
+  margin-bottom: 47px;
+}
+
+.body-content .cabinet-menu .profile-link {
+  padding-left: 10px;
+  text-decoration: none;
+  color: #000000;
+  font-family: "Apercu Pro";
+  letter-spacing: 4px;
+  margin-bottom: 37px;
+}
+
+.body-content .cabinet-menu .profile-link:hover {
+  color: #918D88;
+  text-decoration: underline;
+}
+
+.body-content .cabinet-menu .active {
+  color: #918D88;
+  text-decoration: underline;
+}
+
+.body-content .cabinet-workingplace {
+  width: 85%;
+  margin-left: 80px;
+}
+
+.body-content .cabinet-workingplace h1 {
+  font-size: 40px;
+  font-family: 'Kudryashev Display';
+  padding-top: 76px;
+}
+
+.top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  height: 80%;
+}
+
+.top .left {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.top .right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+}
+
+.item {
+  margin-top: 20px;
+}
+
+#create-expo {
+  height: 70%;
+}
+
+.create {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 40px 0 0 auto;
+  border: 2px solid #000000;
+  width: 150px;
+  height: 50px;
+  padding-left: 45px;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #8F755D;
+  width: 100%;
+  outline: none;
+}
+
+.halls {
+  border: none;
+  border-bottom: 2px solid #8F755D;
+  outline: none;
+  border-radius: 0px;
+  background-color: transparent;
+  text-align: left;
+  padding: 0;
+  width: 100%;
+}
+
+.halls:hover {
+  border: none;
+  color: #8F755D;
+  border-bottom: 2px solid #8F755D;
+  border-radius: 0px;
+  background-color: transparent;
+}
+
+footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  height: 100px;
+  letter-spacing: 4px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-top: 2px solid #918D88;
+}
+
+footer * {
+  color: #544334;
+}
+
+footer .logo a {
+  text-decoration: none;
+  font-family: "Apercu Pro";
+  letter-spacing: 4px;
+  font-size: 20px;
+  color: #544334;
+}
+
+footer .links {
+  width: 110px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+footer .links .insta .facebook {
+  width: 25px;
+}
+/*# sourceMappingURL=cabinet-style.css.map */

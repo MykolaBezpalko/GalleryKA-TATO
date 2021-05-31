@@ -95,6 +95,7 @@
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         session.setAttribute("today", format.format(d));
         session.setAttribute("locale", request.getLocale());
+
 //        System.out.println(session.getAttribute("locale"));
     %>
     <%=session.getAttribute("today")%>

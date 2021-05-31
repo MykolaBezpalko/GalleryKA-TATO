@@ -1,7 +1,8 @@
 package com.gallery.webjava.db;
 
-import com.gallery.webjava.Mapper;
+import com.gallery.webjava.web.Mapper;
 import com.gallery.webjava.db.entity.User;
+
 import static com.gallery.webjava.db.Constants.*;
 
 import java.sql.Connection;
@@ -29,7 +30,7 @@ public class UserDAO {
         }
     }
 
-    public User getUserByEmail(String email){
+    public User getUserByEmail(String email) {
         User user = null;
         Connection connection = null;
         PreparedStatement ps;
@@ -52,7 +53,26 @@ public class UserDAO {
         return user;
     }
 
-
+    public Integer getUserId(String email) {
+        Integer id = null;
+        Connection conn = null;
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            conn = DBManager.getInstance().getConnection();
+            ps = conn.prepareStatement(GET_USER_ID);
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt(ID);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally{
+            DBManager.getInstance().commitAndClose(conn);
+        }
+        return id;
+    }
 
 
     /**
