@@ -2,6 +2,7 @@
 <%@ page import="com.gallery.webjava.db.entity.Exposition" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.gallery.webjava.db.AdminDAO" %>
+<%@ page import="com.gallery.webjava.db.entity.Hall" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -15,7 +16,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
               crossorigin="anonymous">
-        <link rel="stylesheet" href="../styles/cabinet-style.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/pages/styles/cabinet-style.css">
     </head>
 </head>
 <body>
@@ -60,7 +61,7 @@
                 <div class="photo"></div>
                 <p class="role">Administrator</p>
                 <a href="#" class="profile-link">PROFILE</a>
-                <a href="http://localhost:8080/gallery/check-data/admin" class="profile-link">NEW EVENT</a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet" class="profile-link">NEW EVENT</a>
                 <a href="#" class="profile-link">STATISTICS</a>
                 <a href="#" class="profile-link active">SEE ALL EVENTS</a>
 
@@ -76,18 +77,24 @@
                    class="table table-striped">
                 <tr>
                     <td>NAME</td>
+                    <td>HALLS</td>
                     <td>PRICE</td>
                     <td>BEGIN</td>
                     <td>END</td>
                     <td>AVAILABLE</td>
-                    <td>DELETE</td>
+                    <td></td>
                 </tr>
                 <c:forEach items="${expositions}" var="expo">
                     <tr>
                         <td>
                             <c:out value="${expo.getTheme()}"/>
                         </td>
-
+                        <td>
+                            <c:forEach items="${expo.getHalls()}" var="hall">
+                              <c:out value="${hall.getHallName()}"/>
+                                <br>
+                            </c:forEach>
+                        </td>
                         <td>
                             <c:out value="${expo.getPrice()}"/>
                         </td>
@@ -100,7 +107,11 @@
                         <td>
                             <c:out value="${expo.isAvailable()}"/>
                         </td>
-                        <td>DELETE?????</td>
+                        <td>
+                            <form action="all-expo/delete-expo" method="post">
+                                <button class="btn" type="submit" name="expo_id" value="${expo.getId()}">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>

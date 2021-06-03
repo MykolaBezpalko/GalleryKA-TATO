@@ -40,7 +40,7 @@ end_date date,
 price int default 0,
 available boolean default true
 );
-ALTER TABLE description ADD CONSTRAINT exposition_id FOREIGN KEY (exposition_id) REFERENCES exposition(id);
+ALTER TABLE description ADD CONSTRAINT exposition_id FOREIGN KEY (exposition_id) REFERENCES exposition(id) on delete cascade;
 
 create table hall(
 id int not null primary key auto_increment,
@@ -51,7 +51,7 @@ create table hall_exposition(
 hall_id int,
 exposition_id int,
 FOREIGN KEY (hall_id) references hall (id),
-FOREIGN KEY (exposition_id) references exposition (id)
+FOREIGN KEY (exposition_id) references exposition (id) on delete cascade
 );
 
 create table ticket(
@@ -59,8 +59,8 @@ id int not null primary key auto_increment,
 user_id int not null,
 exposition_id int not null,
 created datetime DEFAULT CURRENT_TIMESTAMP,
-FOREIGN KEY (exposition_id) references exposition (id),
-FOREIGN KEY (user_id) references user (id)
+FOREIGN KEY (exposition_id) references exposition (id) on delete cascade,
+FOREIGN KEY (user_id) references user (id) on delete cascade
 );
 
 insert into language (name) values ('english');
@@ -70,10 +70,11 @@ insert into admin (name,email,password) values('Default Administrator','admin@ad
 insert into user (name,email,password) values('Default User','user@user.com','1234');
 INSERT INTO hall (name) VALUES ('The Great Hall'),('The Grey Hall'),('The Katato Hall');
 INSERT INTO exposition (name,start_date,end_date,price) values 
-	("GRISHIGIANO. Simplicity is the highest form of sophistication", "2021-08-08", "2021-09-12", 500),
-    ("EGENHÄNDIGT. Ceramics sculptures and scandi style", "2021-08-13", "2021-08-28", 450),
-	("National Institute of American Doll Artists. Art & dolls", "2021-08-25", "2021-09-15", 420),
-	("KRISTIINA HAATAJA. Ancient Cubism", "2021-08-25", "2021-09-25", 400);
+	("GRISHIGIANO. Simplicity is the highest form of sophistication", "2021-06-02", "2021-06-12", 500),
+    ("EGENHÄNDIGT. Ceramics sculptures and scandi style", "2021-06-13", "2021-06-20", 450),
+	("National Institute of American Doll Artists. Art & dolls", "2021-06-02", "2021-06-10", 420),
+	("KRISTIINA HAATAJA. Ancient Cubism", "2021-06-02", "2021-06-10", 400);
+INSERT INTO hall_exposition (hall_id, exposition_id) values (1,1),(1,2),(2,3),(3,4);
 use gallery;
 select * from admin;
 select * from language;
@@ -84,4 +85,5 @@ select * from user;
 select * from description;
 
 select * from hall_exposition;
+
 

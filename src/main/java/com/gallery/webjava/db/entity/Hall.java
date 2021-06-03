@@ -2,8 +2,6 @@ package com.gallery.webjava.db.entity;
 
 public class Hall extends Entity<Entity> {
     private String hallName;
-
-
     public Hall() {
     }
 

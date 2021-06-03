@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebFilter("/create-event")
+@WebFilter("/admin/admin-cabinet/*")
 public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -18,7 +18,6 @@ public class AdminFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession();
-        RequestDispatcher dispatcher;
         PrintWriter writer;
         boolean ifAdmin = session.getAttribute("user") instanceof Administrator;
         writer = resp.getWriter();

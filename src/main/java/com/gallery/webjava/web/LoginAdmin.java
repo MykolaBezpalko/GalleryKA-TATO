@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/check-data/admin")
+@WebServlet("/admin")
 public class LoginAdmin extends HttpServlet {
     RequestDispatcher dispatcher;
     HttpSession session;
@@ -37,9 +37,9 @@ public class LoginAdmin extends HttpServlet {
             return;
         }
         if (ifAdmin) {
-            dispatcher = req.getRequestDispatcher("../pages/admin-pages/admin-cabinet.jsp");
+            dispatcher = req.getRequestDispatcher("/check-data/admin/admin-cabinet");
             dispatcher.forward(req, resp);
-            resp.sendRedirect("../pages/admin-pages/admin-cabinet.jsp");
+//            resp.sendRedirect("../pages/admin-pages/admin-cabinet.jsp");
         } else {
             writer.println("<html>" +
                     "<body style=\"text-align:center;\">" +
@@ -58,17 +58,17 @@ public class LoginAdmin extends HttpServlet {
         session.setAttribute("password", req.getParameter("password"));
         String email = session.getAttribute("email").toString();
         if (email == null || !checkAdmin(email)) {
-            dispatcher = req.getRequestDispatcher("../pages/info-pages/not-admin.html");
+            dispatcher = req.getRequestDispatcher("/pages/info-pages/not-admin.html");
             dispatcher.forward(req, resp);
         } else {
             String password = session.getAttribute("password").toString();
             Administrator admin = new AdminDAO().getAdmin(email, password);
             session.setAttribute("user", admin);
             if (admin != null) {
-                dispatcher = req.getRequestDispatcher("../pages/admin-pages/admin-cabinet.jsp");
-                dispatcher.forward(req, resp);
+                resp.sendRedirect("/gallery/admin/admin-cabinet");
             } else {
-                writer.println("incorrect email email");
+                dispatcher = req.getRequestDispatcher("/pages/info-pages/incorret-password.html");
+                dispatcher.forward(req, resp);
                 session.invalidate();
             }
         }

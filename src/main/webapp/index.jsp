@@ -1,20 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-
-
-<%@page import="com.gallery.webjava.db.AdminDAO" %>
-<%@ page import="java.util.Calendar" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Locale" %>
-
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session"/>
-<fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="lang"/>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <head>
@@ -29,6 +17,10 @@
     </head>
 </head>
 <body>
+<fmt:setBundle basename="lang"/>
+<%--<%System.out.println(session.getAttribute("locale") + " locale from session");--%>
+<%--    System.out.println(response.getLocale() + " locale from response");--%>
+<%--%>--%>
 
 
 <section class="main-page">
@@ -71,11 +63,13 @@
                 </button>
             </form>
 
-            <form id="language" action="#">
-                <button class="language btn" form="language" onclick="<fmt:setLocale value="en_GB"/>">
+            <form id="english" action="gallery" >
+                <button class="language btn" form="english"   >
                     EN
                 </button>
-                <button class="language btn" form="language" onclick="<fmt:setLocale value="uk_UA"/>">
+            </form>
+            <form id="ukrainian" action="lang-ua">
+                <button class="language btn" form="ukrainian"  >
                     UA
                 </button>
             </form>
@@ -84,38 +78,10 @@
     <div class="slogan">
         <h1><fmt:message key="main-page.slogan"/></h1>
     </div>
-    <%response.setLocale(new Locale("en_GB"));%>
 </section>
 <section class="exhibitions">
 
-    <%session.setAttribute("halls", (new AdminDAO().getAllExpositions()));%>
-    <%
-        session.setAttribute("email", "not-login");
-        Date d = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        session.setAttribute("today", format.format(d));
-        session.setAttribute("locale", request.getLocale());
 
-//        System.out.println(session.getAttribute("locale"));
-    %>
-    <%=session.getAttribute("today")%>
-
-    <input type="date" value="<%=session.getAttribute("today")%>">
-    ${"<br>"}
-
-
-<%--    // foreach example--%>
-<%--    <%=request.getLocale()%>--%>
-<%--    ${"<br>"}--%>
-<%--    <c:forEach items="${halls}" var="hall">--%>
-
-<%--        <c:out value="${hall}">--%>
-<%--            <div>--%>
-<%--                <p>${hall.theme}</p>--%>
-<%--                <button>${hall.price}</button>--%>
-<%--            </div>--%>
-<%--        </c:out>--%>
-<%--    </c:forEach>--%>
 
 
         <div class="exposition">

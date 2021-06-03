@@ -25,7 +25,7 @@
         <p class="create-account">WELCOME, ARE YOU OUR ADMINISTRATOR?</p>
         <p class="allready-have">Log in to continue.</p>
 
-        <form id="create-account" action="${pageContext.request.contextPath}/check-data/admin" method="POST">
+        <form id="create-account" action="${pageContext.request.contextPath}/admin" method="POST">
             <div class="field"> <p>E-MAIL</p>
                 <input type="email" name="email" placeholder="Your e-mail" form="create-account"  pattern="[^ @]*@[^ @]*" required></div>
 

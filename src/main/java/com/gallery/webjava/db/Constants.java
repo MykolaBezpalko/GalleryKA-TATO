@@ -67,6 +67,9 @@ public class Constants {
             "INSERT INTO " + HALL_EXPOSITION + '(' + HALL_ID + ',' + EXPOSITION_ID + ')' + " value (?,?)";
     protected static final String INSERT_DESCRIPTION =
             "INSERT INTO " + DESCRIPTION + '(' + EXPOSITION_ID + ',' + DESCRIPTION_TEXT + ',' + LANGUAGE_ID + ')' + " VALUES (?,?,?)";
+    protected static final String DELETE_EXPO = "DELETE FROM exposition WHERE id=?";
+    protected static final String GET_EXPO_HALLS =
+            "SELECT * FROM hall_exposition LEFT OUTER JOIN hall ON hall_exposition.hall_id = hall.id where exposition_id = ?";
 
     //user
     public static final String CREATE_USER =

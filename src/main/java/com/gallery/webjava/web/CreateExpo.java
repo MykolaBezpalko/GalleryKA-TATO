@@ -1,35 +1,32 @@
 package com.gallery.webjava.web;
 
 import com.gallery.webjava.db.AdminDAO;
-
-import static com.gallery.webjava.db.Constants.*;
-
-import com.gallery.webjava.db.entity.Exposition;
-import com.gallery.webjava.db.entity.Hall;
+import com.gallery.webjava.db.entity.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 
 @WebServlet("/create-event")
 public class CreateExpo extends HttpServlet {
     PrintWriter pw;
+    HttpSession session;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         AdminDAO admin = new AdminDAO();
+        session = req.getSession();
         pw = resp.getWriter();
         Exposition expo = new Exposition();
         try {
             String theme = req.getParameter("theme");
-            java.sql.Date begin = java.sql.Date.valueOf(req.getParameter("start-date"));
-            java.sql.Date end = java.sql.Date.valueOf(req.getParameter("end-date"));
+            java.sql.Date begin = java.sql.Date.valueOf(session.getAttribute("begin").toString());
+            java.sql.Date end = java.sql.Date.valueOf(session.getAttribute("end").toString());
             Integer price = Integer.valueOf(req.getParameter("price"));
-            String[] hall = req.getParameterValues("hall");
+            String[] hall = (String[]) session.getAttribute("halls");
             String description_ua = req.getParameter("description-ua");
             String description_en = req.getParameter("description-en");
 
@@ -60,9 +57,6 @@ public class CreateExpo extends HttpServlet {
             System.out.println("Cant create expo from admin cabinet");
             e.printStackTrace();
         }
-        pw.println("<html>" +
-                "<h1>" +
-                expo + "</h1>" +
-                "</html>");
+        resp.sendRedirect("http://localhost:8080/gallery/admin/admin-cabinet");
     }
 }

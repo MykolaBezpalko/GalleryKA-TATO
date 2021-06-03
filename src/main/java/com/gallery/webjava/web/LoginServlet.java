@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
                 writer.println(user);
             } else {
                 //change after on error page.
-                writer.println("incorrect email email");
+                writer.println("incorrect email");
             }
 
         }

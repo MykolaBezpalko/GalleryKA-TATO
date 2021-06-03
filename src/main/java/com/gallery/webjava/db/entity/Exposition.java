@@ -65,6 +65,10 @@ public class Exposition extends Entity<Entity> {
         return halls;
     }
 
+    public void setHalls(List<Hall> halls){
+        this.halls = halls;
+    }
+
     public void addHall(Hall hall) {
         halls.add(hall);
     }

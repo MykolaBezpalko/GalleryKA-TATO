@@ -60,7 +60,7 @@ public class CreateAccount extends HttpServlet {
         uDao.createUser(user);
         user.setId(uDao.getUserId(user.getEmail()));
         session.setAttribute("user", user);
-        resp.sendRedirect("../webapp/pages/user-pages/user-cabinet.html");
+        resp.sendRedirect("./pages/user-pages/user-cabinet.html");
         System.out.println("===>> created user:");
         System.out.println(session.getAttribute("user"));
 
