@@ -4,12 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>KA-TATO Personal</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
               crossorigin="anonymous">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="../styles/cabinet-style.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/pages/styles/cabinet-style.css">
 </head>    
 
 <body>
@@ -22,7 +20,7 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="http://localhost:8080/gallery/">
                     KA-TATO
                     <br>
                     GALLERY
@@ -47,8 +45,8 @@
             </div>
         </nav>
         <div class="mainButtons">
-            <form id="login" action="login-page">
-                <button class="login btn" form="login">
+            <form id="login" action="../../logout">
+                <button class="logout btn" form="login">
                     LOG OUT
                 </button>
             </form>
@@ -65,8 +63,12 @@
     </section>
 
     <div class="cabinet-menu">
-      
-    </div>
+        <div class="profile-info">
+            <p class="role">User Name</p>
+            <a href="#" class="profile-link">PROFILE</a>
+            <a href="http://localhost:8080/gallery/admin/admin-cabinet" class="profile-link active">BUY A TICKET</a>
+            <a href="#" class="profile-link">MY TICKETS</a>
+        </div>
     <div class="cabinet-workingplace">
 
     </div>
@@ -75,14 +77,15 @@
 
 <footer>
     <div class="logo">
-        <a href="#">KA-TATO<br>GALLERY</a>
+        <a href="http://localhost:8080/gallery/">KA-TATO<br>GALLERY</a>
     </div>
     <div class="contact">800 500 30 20</div>
     <div class="contact">Lviv, Dreem street 13/A</div>
     <div class="contact">8.00 - 22.00</div>
     <div class="links">
-        <div class="insta"><img src="styles/images/INSTAGRAM.svg" alt=""></div>
-        <div class="facebook"><img src="styles/images/FACEBOOK.svg" alt=""></div>
+        <div class="insta"><img src="pages/styles/images/INSTAGRAM.svg" alt=""></div>
+        <div class="facebook"><img src="pages/styles/images/FACEBOOK.svg" alt=""></div>
+
     </div>
 </footer>
 

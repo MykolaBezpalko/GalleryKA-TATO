@@ -30,7 +30,7 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="http://localhost:8080/gallery/">
                     KA-TATO
                     <br>
                     GALLERY

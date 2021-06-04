@@ -145,6 +145,14 @@ body {
   font-family: 'Kudryashev Display';
 }
 
+.exhibitions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
 .actionCall {
   width: 100%;
   height: 588px;

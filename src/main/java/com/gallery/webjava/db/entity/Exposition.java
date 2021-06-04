@@ -73,6 +73,15 @@ public class Exposition extends Entity<Entity> {
         halls.add(hall);
     }
 
+    public String getHallsString(){
+        StringBuilder sb = new StringBuilder();
+        for(Hall h : halls){
+            sb.append(h.getHallName()).append(',');
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         return "Exposition{" +

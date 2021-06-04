@@ -1,6 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix = "tag" uri = "/WEB-INF/mytag/mytag.tld"%>
+
+<c:set var="language" value="${not empty sessionScope.language ? sessionScope.language : pageContext.request.locale}"
+       scope="session"/>
+<fmt:setLocale value="${language}"/>
+<fmt:setBundle basename="text"/>
+
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -18,10 +28,6 @@
 </head>
 <body>
 <fmt:setBundle basename="lang"/>
-<%--<%System.out.println(session.getAttribute("locale") + " locale from session");--%>
-<%--    System.out.println(response.getLocale() + " locale from response");--%>
-<%--%>--%>
-
 
 <section class="main-page">
     <section class="header rov text-center text-md-start">
@@ -81,38 +87,17 @@
 </section>
 <section class="exhibitions">
 
-
-
-
-        <div class="exposition">
-            <p class="exhibition_place">The Great Hall</p>
-            <div class="exhibition_photo"></div>
-            <div class="exhibition_date">8 Aug 2021</div>
-            <p class="exhibition_name">GRISHIGIANO. Simplicity is the highest form of sophistication</p>
-            <button class="exhibition_buy">500 UAH</button>
-        </div>
-
-        <div class="exposition">
-            <p class="exhibition_place">The Great Hall</p>
-            <div class="exhibition_photo"></div>
-            <div class="exhibition_date">13 Aug 2021</div>
-            <p class="exhibition_name">EGENHÄNDIGT. Ceramics sculptures and scandi style.</p>
-            <button class="exhibition_buy">450 UAH</button>
-        </div>
-
-
-        <div class="exposition">
-            <p class="exhibition_place">The Great Hall</p>
-            <div class="exhibition_photo"></div>
-            <div class="exhibition_date">25 Aug 2021</div>
-            <p class="exhibition_name">National Institute of American Doll Artists. Art & dolls. </p>
-            <form action="/getcard">
-                <button class="exhibition_buy">420 UAH</button>
-            </form>
-
-        </div>
-
+    <c:forEach items="${expos}" var="expo">
+        <tag:card
+                hallName="${expo.getHallsString()}" expoTheme="${expo.getTheme()}"
+                beginDate="${expo.getBegin()}" endDate="${expo.getEnd()}"
+                price="${expo.getPrice()}">
+        </tag:card>
+    </c:forEach>
 </section>
+<div>
+    <tag:pagination></tag:pagination>
+</div>
 
 <section class="actionCall">
     <p>Objects & Exhibitions</p>
@@ -128,8 +113,8 @@
     <div class="contact">Lviv, Dreem street 13/A</div>
     <div class="contact">8.00 - 22.00</div>
     <div class="links">
-        <div class="insta"><img src="styles/images/INSTAGRAM.svg" alt=""></div>
-        <div class="facebook"><img src="styles/images/FACEBOOK.svg" alt=""></div>
+        <div class="insta"><img src="pages/styles/images/INSTAGRAM.svg" alt=""></div>
+        <div class="facebook"><img src="pages/styles/images/FACEBOOK.svg" alt=""></div>
     </div>
 </footer>
 

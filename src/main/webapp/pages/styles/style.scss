@@ -111,6 +111,11 @@ body{
 
 //place for exposotion-cards
 
+.exhibitions{
+    display: flex;
+    justify-content: space-around;
+}
+
 .actionCall{
     width: 100%;
     height: 588px;

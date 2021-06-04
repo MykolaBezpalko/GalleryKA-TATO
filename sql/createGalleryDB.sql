@@ -86,4 +86,14 @@ select * from description;
 
 select * from hall_exposition;
 
+select distinct * from hall
+right outer join hall_exposition on hall.id = hall_id
+right outer join exposition  on hall_exposition.exposition_id = exposition.id;
 
+select distinct * from hall
+right outer join hall_exposition on hall.id = hall_id
+right outer join exposition  on hall_exposition.exposition_id = exposition.id
+cross join description on exposition.id = description.exposition_id;
+
+select count(*) from exposition;
+select * from exposition limit 0,3;

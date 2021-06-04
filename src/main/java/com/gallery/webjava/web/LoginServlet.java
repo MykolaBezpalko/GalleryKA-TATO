@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
             User user = new UserDAO().getUserByEmail(email);
             session.setAttribute("user", user);
             if (user != null) {
-                writer.println(user);
+                resp.sendRedirect("user-cabinet");
             } else {
                 //change after on error page.
                 writer.println("incorrect email");

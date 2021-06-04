@@ -23,6 +23,7 @@ public class CheckDates extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Connection conn = null;
         session = req.getSession();
         dispatcher = req.getRequestDispatcher("admin-cabinet");
         HashSet<java.sql.Date> dates = new HashSet<>();
@@ -38,8 +39,6 @@ public class CheckDates extends HttpServlet {
         session = req.getSession();
         session.setAttribute("begin", req.getParameter("start-date"));
         session.setAttribute("end", req.getParameter("end-date"));
-        Connection conn = null;
-
         for (String s : chosenHalls) {
             builder.append(s).append(',');
             try {
