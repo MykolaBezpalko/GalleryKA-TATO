@@ -1,4 +1,4 @@
-package com.gallery.webjava;
+package com.gallery.webjava.web;
 
 import java.sql.ResultSet;
 

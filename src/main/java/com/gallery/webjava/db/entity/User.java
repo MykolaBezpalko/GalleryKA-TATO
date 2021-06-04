@@ -61,7 +61,7 @@ public class User extends Entity<Entity> {
     @Override
     public String toString() {
         return "User{ Id= " + getId() +
-                "language= " + language +
+//                ", language= " + language.getLanguageName() +
                 ", userName= '" + userName + '\'' +
                 ", email= '" + email + '\'' +
                 '}';

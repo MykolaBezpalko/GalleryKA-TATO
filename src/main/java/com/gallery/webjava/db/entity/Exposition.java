@@ -1,17 +1,16 @@
 package com.gallery.webjava.db.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Exposition extends Entity<Entity> {
     private String theme;
-    private List<Hall> halls;
-    private Date begin;
-    private Date end;
+    private List<Hall> halls = new ArrayList();
+    private java.sql.Date begin;
+    private java.sql.Date end;
     Integer price;
-    private String description;
     private boolean isAvailable;
-    private Language language;
 
     public Exposition() {
         setTheme("No Theme");
@@ -34,7 +33,7 @@ public class Exposition extends Entity<Entity> {
         this.price = price;
     }
 
-    public void setBegin(Date begin) {
+    public void setBegin(java.sql.Date begin) {
         this.begin = begin;
     }
 
@@ -42,16 +41,8 @@ public class Exposition extends Entity<Entity> {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(java.sql.Date end) {
         this.end = end;
-    }
-
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
     }
 
     public boolean isAvailable() {
@@ -74,26 +65,31 @@ public class Exposition extends Entity<Entity> {
         return halls;
     }
 
+    public void setHalls(List<Hall> halls){
+        this.halls = halls;
+    }
+
     public void addHall(Hall hall) {
         halls.add(hall);
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description){
-        this.description = description;
+    public String getHallsString(){
+        StringBuilder sb = new StringBuilder();
+        for(Hall h : halls){
+            sb.append(h.getHallName()).append(',');
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
     }
 
     @Override
     public String toString() {
         return "Exposition{" +
-                "theme='" + theme + '\'' +
+                " id= " + getId() +
+                ", theme='" + theme + '\'' +
                 ", halls=" + halls +
                 ", begin=" + begin +
                 ", end=" + end +
-                ", language=" + language.getLanguageName() +
                 ", isAvailable=" + isAvailable +
                 '}';
     }

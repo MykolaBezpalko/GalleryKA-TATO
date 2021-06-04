@@ -8,6 +8,9 @@
     <request-character-encoding>windows-1251</request-character-encoding>
     <response-character-encoding>windows-1251</response-character-encoding>
 
+<!--    <welcome-file-list>-->
+<!--        <welcome-file>index.jsp</welcome-file>-->
+<!--    </welcome-file-list>-->
     <servlet>
         <servlet-name>create-account</servlet-name>
         <jsp-file>/create-account.jsp</jsp-file>
@@ -28,11 +31,47 @@
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.gallery.webjava.LoginServlet</servlet-class>
+        <servlet-class>com.gallery.webjava.web.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/check-data</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>new-event</servlet-name>
+        <jsp-file>/pages/admin-pages/check-dates.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>new-event</servlet-name>
+        <url-pattern>/admin/admin-cabinet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>insert-info</servlet-name>
+        <jsp-file>/pages/admin-pages/admin-cabinet.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>insert-info</servlet-name>
+        <url-pattern>/admin/admin-cabinet/insert-info</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>allExpo</servlet-name>
+        <jsp-file>/pages/admin-pages/admin-cabinet-allexpo.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>allExpo</servlet-name>
+        <url-pattern>/admin/admin-cabinet/all-expo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>user-cabinet</servlet-name>
+        <jsp-file>/pages/user-pages/user-cabinet.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>user-cabinet</servlet-name>
+        <url-pattern>/user-cabinet</url-pattern>
     </servlet-mapping>
 
 

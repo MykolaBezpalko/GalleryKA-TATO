@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>simple</short-name>
+    <uri>http://tomcat.apache.org/example-taglib</uri>
+    <description>My Custon tags library</description>
+
+    <tag>
+        <name>card</name>
+        <tag-class>com.gallery.webjava.web.tag.CardTag</tag-class>
+        <attribute>
+            <name>hallName</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>expoTheme</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>price</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>beginDate</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>endDate</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+<!--        <attribute>-->
+<!--            <name>description</name>-->
+<!--            <required>true</required>-->
+<!--        </attribute>-->
+    </tag>
+
+    <tag>
+        <name>pagination</name>
+        <tag-class>com.gallery.webjava.web.tag.PaginationTag</tag-class>
+    </tag>
+</taglib>
+

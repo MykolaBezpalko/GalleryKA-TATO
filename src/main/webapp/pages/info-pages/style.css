@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "Kudryashev Display";
+  src: url("../styles/fonts/Kudryashev-Display.otf");
+}
+
+@font-face {
+  font-family: "Apercu Pro";
+  src: url("../styles/fonts/ApercuPro-Regular.otf");
+}
+
+body {
+  font-size: 35px;
+  padding-top: 100px;
+  text-align: center;
+  background-color: #FAF5EF;
+}
+
+h1 {
+  font-size: 35px;
+  font-family: "Kudryashev Display";
+}
+
+a {
+  font-family: "Apercu Pro";
+  letter-spacing: 4px;
+  font-size: 40px;
+  color: #544334;
+  padding-top: 25px;
+}
+
+.back-to-main {
+  position: relative;
+  top: 100px;
+}
+/*# sourceMappingURL=style.css.map */

@@ -28,7 +28,7 @@ body {
 }
 
 .header {
-  height: 117px;
+  height: 80px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -143,6 +143,14 @@ body {
   color: #FFFFFF;
   font-size: 110px;
   font-family: 'Kudryashev Display';
+}
+
+.exhibitions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .actionCall {
@@ -341,7 +349,7 @@ footer .links .insta .facebook {
   color: #afafaf;
 }
 
-#create-account button {
+.submit-creation {
   margin: 20px 0 0 0;
   border: 1px solid #000000;
   background-color: transparent;

@@ -1,5 +1,4 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +10,7 @@
               integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./pages/styles/style.css" type="text/css">
+        <link rel="stylesheet" href="../styles/style.css">
     </head>
 </head>
 <body>
@@ -20,30 +19,28 @@
     </div>
     <div class="fields">
         <div class="close"><a href="http://localhost:8080/gallery">
-            <img src="./pages/styles/images/close.png" alt="" style="  width: 30px;
+            <img src="../styles/images/close.png" alt="" style="  width: 30px;
             height: 30px">
         </a></div>
-        <p class="create-account">CREATE ACCOUNT</p>
-        <p class="allready-have">Already have an account?</p>
-        <p class="to-login"><a href="http://localhost:8080/gallery/login-page">Log In.</a></p>
+        <p class="create-account">WELCOME, ARE YOU OUR ADMINISTRATOR?</p>
+        <p class="allready-have">Log in to continue.</p>
 
-        <form id="create-account" action="new-user" method="POST">
+        <form id="create-account" action="${pageContext.request.contextPath}/admin" method="POST">
             <div class="field"> <p>E-MAIL</p>
                 <input type="email" name="email" placeholder="Your e-mail" form="create-account"  pattern="[^ @]*@[^ @]*" required></div>
 
             <div class="field"><p>PASSWORD</p>
-                <input type="password" name="password" placeholder="Your password" form="create-account"  pattern="[A-Za-z0-9]{4,16}" title="min: 4 max: 16 (Latin and numbers)"  required></div>
+                <input type="password" name="password" placeholder="Your password" form="create-account"  pattern="[A-Za-z0-9]{4,16}" title="min: 4 max: 16 (Lattin and numbers)"  required></div>
 
-            <div class="field"> <p>REPEAT PASSWORD</p>
-                <input type="password" name ="repeat-password" placeholder="Repeat password" form="create-account" pattern="[A-Za-z0-9]{4,16}" title="min: 4 max: 16 (Latin and numbers)" required></div>
-
-            <div class="field"><button class="submit-creation" type="submit" form="create-account">
-                CREATE ACCOUNT
-            </button></div>
-
+            <div class="field" style="width: 50%;">
+                <button class="submit-creation" type="submit" form="create-account">
+                    LOG IN
+                </button>
+            </div>
         </form>
 
     </div>
 </section>
+
 </body>
 </html>
