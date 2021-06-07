@@ -29,13 +29,11 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="http://localhost:8080/gallery/">
                     KA-TATO
                     <br>
                     GALLERY
                 </a>
-
-
             </div>
         </nav>
         <div class="mainButtons">
@@ -62,7 +60,7 @@
                 <p class="role">Administrator</p>
                 <a href="#" class="profile-link">PROFILE</a>
                 <a href="http://localhost:8080/gallery/admin/admin-cabinet" class="profile-link">NEW EVENT</a>
-                <a href="#" class="profile-link">STATISTICS</a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet/statistic" class="profile-link">STATISTICS</a>
                 <a href="#" class="profile-link active">SEE ALL EVENTS</a>
 
             </div>
@@ -73,7 +71,7 @@
             <%
                 List<Exposition> expositions = new AdminDAO().getAllExpositions();
                 request.setAttribute("expositions", expositions);%>
-            <table style="border: 2px solid #8F755D;"
+            <table style="border: 2px solid #8F755D; width: 80%"
                    class="table table-striped">
                 <tr>
                     <td>NAME</td>
@@ -81,7 +79,6 @@
                     <td>PRICE</td>
                     <td>BEGIN</td>
                     <td>END</td>
-                    <td>AVAILABLE</td>
                     <td></td>
                 </tr>
                 <c:forEach items="${expositions}" var="expo">
@@ -103,9 +100,6 @@
                         </td>
                         <td>
                             <c:out value="${expo.getEnd()}"/>
-                        </td>
-                        <td>
-                            <c:out value="${expo.isAvailable()}"/>
                         </td>
                         <td>
                             <form action="all-expo/delete-expo" method="post">

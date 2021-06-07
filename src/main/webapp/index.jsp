@@ -6,9 +6,6 @@
 <c:set var="language" value="${not empty sessionScope.language ? sessionScope.language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}"/>
-<fmt:setBundle basename="text"/>
-
-
 
 
 <!DOCTYPE html>
@@ -65,6 +62,8 @@
         <div class="mainButtons">
             <form id="login" action="login-page">
                 <button class="login btn" form="login">
+<%--                    <c:set var="user" value="${}"--%>
+<%--                    <c:if test="${user != null}"--%>
                     LOG IN
                 </button>
             </form>
@@ -96,14 +95,14 @@
     </c:forEach>
 </section>
 <div>
-    <tag:pagination></tag:pagination>
+    <tag:pagination>
+    </tag:pagination>
 </div>
 
 <section class="actionCall">
     <p>Objects & Exhibitions</p>
-    <form id="actionCallBtn" action="#">
-        <button class="buyBtn" form="actionCallBtn">BUY TICKET</button>
-    </form>
+    <button class="btn buyBtn" type="button"
+            onclick="window.location.href='http://localhost:8080/gallery/user-cabinet'">BUY TICKET</button>
 </section>
 <footer>
     <div class="logo">

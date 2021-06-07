@@ -16,12 +16,11 @@ public class UserFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
-        System.out.println("user filter works");
         Object u = session.getAttribute("user");
         if(!(u instanceof User)){
             response.sendRedirect("/gallery/login-page");
-        }else
-
-        filterChain.doFilter(servletRequest,servletResponse);
+        }else{
+            filterChain.doFilter(servletRequest,servletResponse);
+        }
     }
 }

@@ -10,11 +10,9 @@ public class Exposition extends Entity<Entity> {
     private java.sql.Date begin;
     private java.sql.Date end;
     Integer price;
-    private boolean isAvailable;
 
     public Exposition() {
         setTheme("No Theme");
-        isAvailable = true;
     }
 
     public Exposition(String theme) {
@@ -43,14 +41,6 @@ public class Exposition extends Entity<Entity> {
 
     public void setEnd(java.sql.Date end) {
         this.end = end;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
     }
 
     public String getTheme() {
@@ -90,7 +80,6 @@ public class Exposition extends Entity<Entity> {
                 ", halls=" + halls +
                 ", begin=" + begin +
                 ", end=" + end +
-                ", isAvailable=" + isAvailable +
                 '}';
     }
 }

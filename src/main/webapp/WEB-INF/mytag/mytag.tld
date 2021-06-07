@@ -44,5 +44,25 @@
         <name>pagination</name>
         <tag-class>com.gallery.webjava.web.tag.PaginationTag</tag-class>
     </tag>
+
+    <tag>
+        <name>getPrice</name>
+        <tag-class>com.gallery.webjava.web.tag.TotalPrice</tag-class>
+        <attribute>
+            <name>chosenExpos</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>visitors</name>
+        <tag-class>com.gallery.webjava.web.tag.TicketsCountTag</tag-class>
+        <attribute>
+            <name>expoId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>
 

@@ -115,6 +115,14 @@ body{
     display: flex;
     justify-content: space-around;
 }
+.pagination{
+    justify-content: center;
+}
+.expo-photo{
+    background-image: url("images/kristiina_haataja.png");
+    background-position: center;
+    background-size: contain;
+}
 
 .actionCall{
     width: 100%;

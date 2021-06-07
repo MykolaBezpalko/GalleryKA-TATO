@@ -60,6 +60,8 @@ public class Constants {
     //expo
     protected static final String GET_EXPO_BY_NAME = "SELECT * FROM " + EXPOSITION + " WHERE " + NAME + "=?";
     protected static final String GET_ALL_EXPO = "SELECT * FROM " + EXPOSITION;
+    protected static final String GET_ALL_EXPO_FROM_TODAY = "SELECT * from " + EXPOSITION + " where end_date >= now();";
+
     protected static final String INSERT_EXPO =
             "INSERT INTO " + EXPOSITION + '(' + NAME + ',' + START_DATE + ',' + END_DATE + ',' + PRICE + ')' + " VALUES (?,?,?,?)";
     protected static final String GET_EXPO_ID = "SELECT " + ID + " FROM " + EXPOSITION + " WHERE " + NAME + "=?";
@@ -75,7 +77,12 @@ public class Constants {
     public static final String CREATE_USER =
             "INSERT INTO " + USER + '(' + NAME + ',' + PASSWORD + ',' + EMAIL + ')' + "values" + "(?,?,?)";
     protected static final String GET_USER_BY_EMAIL = "SELECT * FROM " + USER + " WHERE " + EMAIL + "=?";
+    protected static final String GET_USER = "SELECT * FROM " + USER + " WHERE " + EMAIL + "=? AND " + PASSWORD + "=?";
+
     protected static final String GET_USER_ID = "SELECT " + ID + " FROM " + USER + " WHERE " + EMAIL + "=?";
 
+    //ticket
+    protected static final String CREATE_TICKET = "INSERT INTO " + TICKET + '(' + USER_ID + ',' + EXPOSITION_ID + ')' + " values (?,?)";
+    protected static final String GET_TICKETS_COUNT = "SELECT count(*) FROM "+ TICKET+ " WHERE " + EXPOSITION_ID + "=?";
 
 }

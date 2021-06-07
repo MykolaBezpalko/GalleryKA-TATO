@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,15 +16,17 @@ import java.util.List;
 public class Pagination extends HttpServlet {
     List<Exposition> allExpo = new AdminDAO().getAllExpositions();
     HttpSession session;
+    Date today = new Date(new java.util.Date().getTime());
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        pagination(req, resp);
        resp.sendRedirect("/gallery");
     }
 
-    private void pagination(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void pagination(HttpServletRequest req, HttpServletResponse resp){
+        allExpo.removeIf(iterExp -> iterExp.getEnd().before(today));
         session = req.getSession();
-        Integer pageNumber = Integer.valueOf(req.getParameter("number"));
+        int pageNumber = Integer.parseInt(req.getParameter("number"));
         int startId = (pageNumber * 3) - 3;
         List<Exposition> partExpos= new LinkedList<>();
 

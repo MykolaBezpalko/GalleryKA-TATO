@@ -1,5 +1,6 @@
 package com.gallery.webjava.web;
 
+import com.gallery.webjava.db.Encoder;
 import com.gallery.webjava.db.UserDAO;
 import com.gallery.webjava.db.entity.User;
 
@@ -20,7 +21,12 @@ public class CreateAccount extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        writer.println("<html>" +
+                "<body style=\"text-align:center;\">" +
+                "<h1 style=\" text-align: center\" > No access here </h1>" +
+                "<a href=\"http://localhost:8080/gallery/create-account\"> Try Again" +
+                "</body>" +
+                "</html>");
     }
 
     @Override
@@ -55,14 +61,11 @@ public class CreateAccount extends HttpServlet {
 
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(Encoder.encode(password));
         user.setUserName("New User");
         uDao.createUser(user);
         user.setId(uDao.getUserId(user.getEmail()));
         session.setAttribute("user", user);
-        resp.sendRedirect("./pages/user-pages/user-cabinet.jsp");
-        System.out.println("===>> created user:");
-        System.out.println(session.getAttribute("user"));
-
+        resp.sendRedirect("user-cabinet");
     }
 }

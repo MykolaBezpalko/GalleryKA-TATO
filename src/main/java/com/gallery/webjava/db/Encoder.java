@@ -5,7 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Encoder {
     public static String encode(String s) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result= new StringBuilder();
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(s.getBytes());

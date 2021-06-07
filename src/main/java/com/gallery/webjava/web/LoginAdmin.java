@@ -28,7 +28,7 @@ public class LoginAdmin extends HttpServlet {
         if(session.getAttribute("user") == null){
             writer.println("<html>" +
                     "<body style=\"text-align:center;\">" +
-                    "<h1 style=\" text-align: center\" > You have no acces to this page.</h1>" +
+                    "<h1 style=\" text-align: center\" > You have no access to this page.</h1>" +
                     "<a href=\"http://localhost:8080/gallery/pages/admin-pages/login-as-admin.jsp?\">Please login as administrator</a>" +
                     "<br>" +
                     "<a href=\"http://localhost:8080/gallery\">Back to homepage </a>" +

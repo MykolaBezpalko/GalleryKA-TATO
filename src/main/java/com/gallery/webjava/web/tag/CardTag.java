@@ -34,16 +34,16 @@ public class CardTag extends TagSupport {
     }
 
     @Override
-    public int doStartTag() throws JspException{
+    public int doStartTag() throws JspException {
         JspWriter writer = pageContext.getOut();
         try {
             writer.println("<div class=\"card\" style=\"width: 300px; height: 350px; background-color: aliceblue;\">\n" +
                     "<h3 class=\"hallName\">" + hallName + "</h3>\n" +
-                    "<div class=\"photo\" style=\"width: 100%; height: 200px;\">some photo</div>\n" +
-                    "<p class=\"expoName\">"+expoTheme+"</p>" +
+                    "<div class=\"expo-photo\" style=\"width: 100%; height: 200px;\"></div>\n" +
+                    "<p class=\"expoName\">" + expoTheme + "</p>" +
                     "<p class=\"period\">" + beginDate + " - " + endDate + " </p>\n" +
-                    "<form action=\"buy\" method=\"GET\">\n" +
-                    "    <input type=\"hidden\" value=\""+expoTheme+"\" name=\"EXPO\">\n" +
+                    "<form action=\"user-cabinet/buy-ticket-pack\" method=\"GET\">\n" +
+                    "    <input type=\"hidden\" value=\"" + expoTheme + "\" name=\"EXPO\">\n" +
                     "    <button type=\"buyBtn\"  class=\"price\">" + price + "</button>\n" +
                     "</form>\n" +
                     "</div>");

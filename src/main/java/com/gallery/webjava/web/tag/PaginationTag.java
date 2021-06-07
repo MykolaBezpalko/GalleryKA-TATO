@@ -22,7 +22,7 @@ public class PaginationTag extends TagSupport {
         ResultSet rs;
         try {
             conn = DBManager.getInstance().getConnection();
-            ps = conn.prepareStatement("SELECT count(*) from exposition");
+            ps = conn.prepareStatement("SELECT count(*) from exposition where end_date > now() ");
             rs = ps.executeQuery();
             while (rs.next()) {
                 rc = rs.getInt(1);

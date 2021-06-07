@@ -1,9 +1,6 @@
 package com.gallery.webjava.web;
 
-import com.gallery.webjava.db.AdminDAO;
-import com.gallery.webjava.db.Encoder;
 import com.gallery.webjava.db.UserDAO;
-import com.gallery.webjava.db.entity.Administrator;
 import com.gallery.webjava.db.entity.User;
 
 import javax.servlet.*;
@@ -31,17 +28,26 @@ public class LoginServlet extends HttpServlet {
             dispatcher.forward(req, resp);
         } else {
             String password = session.getAttribute("password").toString();
-            User user = new UserDAO().getUserByEmail(email);
+            User user = new UserDAO().getUser(email,password);
             session.setAttribute("user", user);
             if (user != null) {
-                resp.sendRedirect("user-cabinet");
+                writer.println("<html>" +
+                        "<body style=\"text-align:center;\">" +
+                        "<h1 style=\" text-align: center\" > You are in system now.</h1><br>" +
+                        "<a href=\"http://localhost:8080/gallery\"> Back to homepage. </a> <br>" +
+                        "<a href=\"http://localhost:8080/gallery/user-cabinet\"> Go to cabinet. </a>" +
+                        "</body>" +
+                        "</html>");
             } else {
-                //change after on error page.
-                writer.println("incorrect email");
+                writer.println("<html>" +
+                        "<body style=\"text-align:center;\">" +
+                        "<h1 style=\" text-align: center\" > Incorrect password.</h1><br>" +
+                        "<a href=\"http://localhost:8080/gallery/login-page\"> Try Again. </a> <br>" +
+                        "<a href=\"http://localhost:8080/gallery\"> Go to homepage. </a>" +
+                        "</body>" +
+                        "</html>");
             }
-
         }
-
     }
 
     public static boolean checkUser(String email) {

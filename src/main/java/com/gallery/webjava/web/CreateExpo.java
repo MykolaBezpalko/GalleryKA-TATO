@@ -22,23 +22,25 @@ public class CreateExpo extends HttpServlet {
         pw = resp.getWriter();
         Exposition expo = new Exposition();
         try {
+            String beginDate = session.getAttribute("begin").toString();
+            String endDate = session.getAttribute("end").toString();
             String theme = req.getParameter("theme");
-            java.sql.Date begin = java.sql.Date.valueOf(session.getAttribute("begin").toString());
-            java.sql.Date end = java.sql.Date.valueOf(session.getAttribute("end").toString());
             Integer price = Integer.valueOf(req.getParameter("price"));
             String[] hall = (String[]) session.getAttribute("halls");
             String description_ua = req.getParameter("description-ua");
             String description_en = req.getParameter("description-en");
+
+            //handle thrown IllegalArgumentException while null
+            java.sql.Date begin = java.sql.Date.valueOf(beginDate);
+            java.sql.Date end = java.sql.Date.valueOf(endDate);
+
 
             for (String s : hall) {
                 Hall h = admin.getHallByName(s);
                 expo.addHall(h);
             }
 
-            if (theme == null || price == null || hall == null) {
-                System.err.println("One of fields empty");
-                throw new IllegalStateException();
-            }
+
             expo.setTheme(theme);
             expo.setBegin(begin);
             expo.setEnd(end);
@@ -50,10 +52,10 @@ public class CreateExpo extends HttpServlet {
 
             admin.settHallsForExpo(expo, expo.getHalls());
 
-            admin.setDescriptions(expo, description_en,1);
-            admin.setDescriptions(expo, description_ua,2);
+            admin.setDescriptions(expo, description_en, 1);
+            admin.setDescriptions(expo, description_ua, 2);
 
-        } catch (IllegalStateException | NumberFormatException e ) {
+        } catch (IllegalStateException | NumberFormatException e) {
             System.out.println("Cant create expo from admin cabinet");
             e.printStackTrace();
         }

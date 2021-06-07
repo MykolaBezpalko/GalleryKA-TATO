@@ -418,6 +418,29 @@ public class AdminDAO {
         return allExpo;
     }
 
+    public List<Exposition> allExpositionsForUser() {
+        List<Exposition> allExpo = new ArrayList<>();
+        Connection connection = null;
+        ExpositionMapper mapper = new ExpositionMapper();
+        Statement st = null;
+        ResultSet rs;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            st = connection.createStatement();
+            rs = st.executeQuery(GET_ALL_EXPO_FROM_TODAY);
+
+            while (rs.next()) {
+                allExpo.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("cant get Exposition list");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+        return allExpo;
+    }
+
     /**
      * Insert new line into exposition table, all fields getting from CreateExpo
      *
@@ -548,6 +571,32 @@ public class AdminDAO {
         }
     }
 
+    public Integer getVisits(Integer id){
+        Integer visits = null;
+        Connection connection = null;
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            ps = connection.prepareStatement(GET_TICKETS_COUNT);
+            ps.setInt(1,id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                visits = rs.getInt(1);
+            }
+
+            if (id == null) {
+                throw new IllegalStateException();
+            }
+        } catch (IllegalStateException | SQLException e) {
+            System.out.println("Cant get Ticket by Expo ID");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+        return visits;
+    }
+
     /**
      * Extracts a Administrator object from the result set row.
      */
@@ -615,16 +664,13 @@ public class AdminDAO {
         @Override
         public Exposition mapRow(ResultSet resultSet) {
             Exposition exposition = new Exposition();
-            List<Hall> expoHalls = new ArrayList<>();
             try {
                 exposition.setId(resultSet.getInt(ID));
                 exposition.setTheme(resultSet.getString(NAME));
                 exposition.setBegin(resultSet.getDate(START_DATE));
                 exposition.setEnd(resultSet.getDate(END_DATE));
                 exposition.setPrice(resultSet.getInt(PRICE));
-                exposition.setAvailable(resultSet.getBoolean(AVAILABLE));
                 exposition.setHalls(new AdminDAO().getHallsForExpo(exposition));
-
             } catch (SQLException e) {
                 System.err.println("Can`t map exposition");
                 e.printStackTrace();

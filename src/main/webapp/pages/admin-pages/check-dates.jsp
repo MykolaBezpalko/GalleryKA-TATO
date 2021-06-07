@@ -19,6 +19,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet"/>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
         <script type="text/javascript">
             <%request.setAttribute("availableDates",session.getAttribute("availableDates"));%>
             var availableDates = [${availableDates}];
@@ -59,7 +60,7 @@
 
 
         </script>
-
+        <script src="http://cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.min.js"></script>
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/pages/styles/cabinet-style.css">
     </head>
@@ -74,7 +75,7 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="">
+                <a class="navbar-brand" href="http://localhost:8080/gallery/">
                     KA-TATO
                     <br>
                     GALLERY
@@ -106,7 +107,7 @@
                 <p class="role">Administrator</p>
                 <a href="#" class="profile-link">PROFILE</a>
                 <a href="#" class="profile-link active">NEW EVENT</a>
-                <a href="#" class="profile-link">STATISTICS</a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet/statistic" class="profile-link">STATISTICS</a>
                 <a href="http://localhost:8080/gallery/admin/admin-cabinet/all-expo" class="profile-link">SEE ALL
                     EVENTS</a>
             </div>
@@ -118,11 +119,6 @@
                 <div class="top">
                     <div class="left">
                         <div class="item">
-                            <%
-                                Date d = Calendar.getInstance().getTime();
-                                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                                session.setAttribute("today", format.format(d));
-                            %>
                             <label for="start-date">Begin date</label>
                             <input id="start-date" type="text" name="start-date" form="check-dates"
                                    value="<%=session.getAttribute("begin")%>" required>
@@ -154,7 +150,7 @@
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox"
                                                    name="hall" value="${hall.hallName}"
-                                                   form="check-dates">
+                                                   form="check-dates" id="${hall.id}">
                                             <label class="form-check-label">
                                                 <c:out value="${hall.hallName}"/>
                                             </label>
@@ -167,8 +163,7 @@
                 </div>
                 <button class="btn create" form="create-expo" type="submit">NEXT</button>
             </form>
-            <form id="check-dates" method="post" action="http://localhost:8080/gallery/admin/check-dates"></form>
-
+            <form id="check-dates" method="post" action="http://localhost:8080/gallery/admin/admin-cabinet/check-dates"></form>
         </div>
     </section>
 </section>
@@ -177,6 +172,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous">
+</script>
+
+
+<script>
+    $(":checkbox").on("change", function(){
+        var checkboxValues = {};
+        $(":checkbox").each(function(){
+            checkboxValues[this.id] = this.checked;
+        });
+        $.cookie('checkboxValues', checkboxValues, { expires: 7, path: '/' })
+    });
+
+    function repopulateCheckboxes(){
+        var checkboxValues = $.cookie('checkboxValues');
+        if(checkboxValues){
+            Object.keys(checkboxValues).forEach(function(element) {
+                var checked = checkboxValues[element];
+                $("#" + element).prop('checked', checked);
+            });
+        }
+    }
+
+    $.cookie.json = true;
+    repopulateCheckboxes();
 </script>
 
 </body>
