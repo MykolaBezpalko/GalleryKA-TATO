@@ -1,12 +1,12 @@
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix = "tag" uri = "/WEB-INF/mytag/mytag.tld"%>
+<%@ taglib prefix="tag" uri="/WEB-INF/mytag/mytag.tld" %>
 
 <c:set var="language" value="${not empty sessionScope.language ? sessionScope.language : pageContext.request.locale}"
        scope="session"/>
 <fmt:setLocale value="${language}"/>
-
 
 <!DOCTYPE html>
 <html>
@@ -43,7 +43,8 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#"><fmt:message key="main-page.tickets-visit"/></a>
+                            <a class="nav-link" aria-current="page" href="#"><fmt:message
+                                    key="main-page.tickets-visit"/></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">ART & STORIES</a>
@@ -62,19 +63,19 @@
         <div class="mainButtons">
             <form id="login" action="login-page">
                 <button class="login btn" form="login">
-<%--                    <c:set var="user" value="${}"--%>
-<%--                    <c:if test="${user != null}"--%>
+                    <%--                    <c:set var="user" value="${}"--%>
+                    <%--                    <c:if test="${user != null}"--%>
                     LOG IN
                 </button>
             </form>
 
-            <form id="english" action="gallery" >
-                <button class="language btn" form="english"   >
+            <form id="english" action="gallery">
+                <button class="language btn" form="english">
                     EN
                 </button>
             </form>
             <form id="ukrainian" action="lang-ua">
-                <button class="language btn" form="ukrainian"  >
+                <button class="language btn" form="ukrainian">
                     UA
                 </button>
             </form>
@@ -84,8 +85,35 @@
         <h1><fmt:message key="main-page.slogan"/></h1>
     </div>
 </section>
-<section class="exhibitions">
 
+<div class="sorting" style="display: flex; justify-content: space-around;box-shadow: 0px 1px 0px 0px #918d88;">
+
+    <div>
+        <form action="datesorting" id="time" >
+            <input hidden name="number" value="1" form="time">
+            By Date:
+            <button form="time" type="submit" name="sortType" value="dateFromBegin">🠕</button>
+            <button form="time" type="submit" name="sortType" value="dateFromEnd">🠕</button>
+        </form>
+    </div>
+    <div>
+        <form action="pricesorting" id="price-sort">
+            <input hidden name="number" value="1" form="price-sort">
+            By Price:
+            <button form="price-sort" type="submit" name="sortType" value="minPrice">🠗</button>
+            <button form="price-sort" type="submit" name="sortType" value="maxPrice">🠕</button>
+        </form>
+    </div>
+    <div>
+        <form action="namesorting" id="theme-sort">
+            <input hidden name="number" value="1" form="theme-sort">
+            By Theme:
+            <button form="theme-sort" type="submit" name="sortType" value="themeBegin">🠗</button>
+            <button form="theme-sort" type="submit" name="sortType" value="themeEnd">🠕</button>
+        </form>
+    </div>
+</div>
+<section class="exhibitions">
     <c:forEach items="${expos}" var="expo">
         <tag:card
                 hallName="${expo.getHallsString()}" expoTheme="${expo.getTheme()}"
@@ -95,14 +123,16 @@
     </c:forEach>
 </section>
 <div>
-    <tag:pagination>
+    <tag:pagination sorting="${sorting}">
     </tag:pagination>
 </div>
+
 
 <section class="actionCall">
     <p>Objects & Exhibitions</p>
     <button class="btn buyBtn" type="button"
-            onclick="window.location.href='http://localhost:8080/gallery/user-cabinet'">BUY TICKET</button>
+            onclick="window.location.href='http://localhost:8080/gallery/user-cabinet'">BUY TICKET
+    </button>
 </section>
 <footer>
     <div class="logo">
@@ -116,8 +146,6 @@
         <div class="facebook"><img src="pages/styles/images/FACEBOOK.svg" alt=""></div>
     </div>
 </footer>
-
-
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
         crossorigin="anonymous"></script>

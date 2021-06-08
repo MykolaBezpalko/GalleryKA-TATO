@@ -37,8 +37,7 @@ id int not null primary key auto_increment,
 name varchar(300) not null,
 start_date date,
 end_date date,
-price int default 0,
-available boolean default true
+price int default 0
 );
 ALTER TABLE description ADD CONSTRAINT exposition_id FOREIGN KEY (exposition_id) REFERENCES exposition(id) on delete cascade;
 
@@ -94,3 +93,5 @@ select distinct * from hall
 right outer join hall_exposition on hall.id = hall_id
 right outer join exposition  on hall_exposition.exposition_id = exposition.id
 cross join description on exposition.id = description.exposition_id;
+
+SELECT count(*) FROM TICKET WHERE  EXPOSITION_ID =1;

@@ -43,6 +43,11 @@
     <tag>
         <name>pagination</name>
         <tag-class>com.gallery.webjava.web.tag.PaginationTag</tag-class>
+        <attribute>
+            <name>sorting</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
     </tag>
 
     <tag>

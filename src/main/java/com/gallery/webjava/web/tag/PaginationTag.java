@@ -1,6 +1,7 @@
 package com.gallery.webjava.web.tag;
 
 import com.gallery.webjava.db.DBManager;
+import com.gallery.webjava.web.pagination.Pagination;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -14,6 +15,11 @@ import java.sql.SQLException;
 public class PaginationTag extends TagSupport {
     double pages;
     int recordPerPage = 3;
+    String sorting;
+    public void setSorting(String sorting) {
+        this.sorting = sorting;
+    }
+
 
     public int getRecordsCount() {
         int rc =0;
@@ -44,8 +50,7 @@ public class PaginationTag extends TagSupport {
         int p = (int) pages;
 
         try {
-
-            writer.println("<form action=\"page\"" +
+            writer.println("<form action=\"sorting\"" +
                     "<nav aria-label=\"...\"><ul class=\"pagination\">");
             for (int i = 1; i <= p; i++) {
                 writer.println("<li class=\"page-item\"><a class=\"page-link\" href=\"/gallery/page?number=" + i + "\">" + i + "</a></li>");

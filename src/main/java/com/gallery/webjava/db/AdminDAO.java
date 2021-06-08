@@ -418,6 +418,142 @@ public class AdminDAO {
         return allExpo;
     }
 
+    public List<Exposition> sortedExpoByTimeDesc() {
+        List<Exposition> allExpo = new ArrayList<>();
+        Connection connection = null;
+        ExpositionMapper mapper = new ExpositionMapper();
+        Statement st = null;
+        ResultSet rs;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            st = connection.createStatement();
+            rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by start_date desc");
+
+            while (rs.next()) {
+                allExpo.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("cant get sorted Exposition list");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+        return allExpo;
+    }
+
+    public List<Exposition> sortedExpoByTimeAsc() {
+        List<Exposition> allExpo = new ArrayList<>();
+        Connection connection = null;
+        ExpositionMapper mapper = new ExpositionMapper();
+        Statement st = null;
+        ResultSet rs;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            st = connection.createStatement();
+            rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by start_date asc");
+
+            while (rs.next()) {
+                allExpo.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("cant get sorted Exposition list");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+        return allExpo;
+    }
+
+    public List<Exposition> sortedExpoByPriceAsc() {
+        List<Exposition> allExpo = new ArrayList<>();
+        Connection connection = null;
+        ExpositionMapper mapper = new ExpositionMapper();
+        Statement st = null;
+        ResultSet rs;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            st = connection.createStatement();
+            rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by price asc");
+
+            while (rs.next()) {
+                allExpo.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("cant get sorted Exposition list");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+        return allExpo;
+    }
+
+    public List<Exposition> sortedExpoByPriceDesc() {
+        List<Exposition> allExpo = new ArrayList<>();
+        Connection connection = null;
+        ExpositionMapper mapper = new ExpositionMapper();
+        Statement st = null;
+        ResultSet rs;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            st = connection.createStatement();
+            rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by price desc");
+
+            while (rs.next()) {
+                allExpo.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("cant get sorted Exposition list");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+        return allExpo;
+    }
+    public List<Exposition> sortedExpoByNameDesc() {
+        List<Exposition> allExpo = new ArrayList<>();
+        Connection connection = null;
+        ExpositionMapper mapper = new ExpositionMapper();
+        Statement st = null;
+        ResultSet rs;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            st = connection.createStatement();
+            rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by name desc");
+
+            while (rs.next()) {
+                allExpo.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("cant get sorted Exposition list");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+        return allExpo;
+    }
+    public List<Exposition> sortedExpoByNameAsc() {
+        List<Exposition> allExpo = new ArrayList<>();
+        Connection connection = null;
+        ExpositionMapper mapper = new ExpositionMapper();
+        Statement st = null;
+        ResultSet rs;
+        try {
+            connection = DBManager.getInstance().getConnection();
+            st = connection.createStatement();
+            rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by name asc");
+
+            while (rs.next()) {
+                allExpo.add(mapper.mapRow(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("cant get sorted Exposition list");
+            e.printStackTrace();
+        } finally {
+            DBManager.getInstance().commitAndClose(connection);
+        }
+        return allExpo;
+    }
+
     public List<Exposition> allExpositionsForUser() {
         List<Exposition> allExpo = new ArrayList<>();
         Connection connection = null;
