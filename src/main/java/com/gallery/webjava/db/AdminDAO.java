@@ -2,23 +2,28 @@ package com.gallery.webjava.db;
 
 import com.gallery.webjava.web.Mapper;
 import com.gallery.webjava.db.entity.*;
-
-import static com.gallery.webjava.db.Constants.*;
-
+import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import static com.gallery.webjava.db.Constants.*;
 
 /**
- * Data access object for Administrator entity.
+ * Data access object for Administrator entity. Most of them used with administrator access servlets
+ * all methods insert and remove table`s rows through transaction
  */
 public class AdminDAO {
+
+    private static final Logger log = Logger.getLogger(AdminDAO.class);
+
+
     /**
-     * Insert Administrator object into database. Fields 'email' and 'password' are NULL
+     * Insert new Administrator into data base 'gallery', table :'admin'
      *
-     * @param admin Administrator object
+     * @param admin Administrator object with name, e-mail and password fields
      */
     public void createAdmin(Administrator admin) {
+        log.info("Start creation Administrator");
         Connection connection = null;
         PreparedStatement ps;
         String encodedPassword = Encoder.encode(admin.getPassword());
@@ -27,17 +32,23 @@ public class AdminDAO {
             ps = connection.prepareStatement(CREATE_ADMINISTRATOR);
             ps.setString(1, admin.getName());
             ps.setString(2, admin.getEmail());
-            ps.setString(3, admin.getPassword());
+            ps.setString(3, encodedPassword);
             ps.executeUpdate();
+            log.info("Finish creation Administrator");
         } catch (SQLException e) {
-            System.err.println("Can`t create Administrator");
-            e.printStackTrace();
+            log.error("Can`t create Administrator. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
     }
 
+    /**
+     * Remove administrator from database
+     *
+     * @param name Administrator Name in admin.name column
+     */
     public void deleteAdmin(String name) {
+        log.info("Start deleting Administrator");
         Connection connection = null;
         PreparedStatement ps = null;
         try {
@@ -45,15 +56,22 @@ public class AdminDAO {
             ps = connection.prepareStatement(DELETE_ADMIN);
             ps.setString(1, name);
             ps.executeUpdate();
+            log.info("Finish deleting Administrator");
         } catch (SQLException e) {
-            System.out.println("cant delete admin");
-            e.printStackTrace();
+            log.error("Cant delete Administrator. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
     }
 
+    /**
+     * Looking for administrator in database its by name
+     *
+     * @param name Administrator Name in admin.name column
+     * @return Administrator object mapped from database
+     */
     public Administrator getAdminByName(String name) {
+        log.info("Start search Administrator in database");
         Administrator admin = new Administrator("");
         Connection connection = null;
         PreparedStatement ps = null;
@@ -67,16 +85,23 @@ public class AdminDAO {
             while (rs.next()) {
                 admin = mapper.mapRow(rs);
             }
+            log.info("Got Administrator from database");
         } catch (SQLException e) {
-            System.out.println("Cant get Administrator by NAME");
-            e.printStackTrace();
+            log.error("Cant get Administrator from database." + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return admin;
     }
 
+    /**
+     * Looking for administrator in database its by name
+     *
+     * @param email Administrator Email in admin.email column
+     * @return Administrator object mapped from database
+     */
     public Administrator getAdminByEmail(String email) {
+        log.info("Start looking for admin by its email");
         Administrator admin = null;
         Connection connection = null;
         PreparedStatement ps;
@@ -90,16 +115,25 @@ public class AdminDAO {
             while (rs.next()) {
                 admin = mapper.mapRow(rs);
             }
+            log.info("Got admin by email");
         } catch (SQLException e) {
-            System.out.println("Cant get Administrator by EMAIL");
-            e.printStackTrace();
+            log.error("Cant get Administrator by EMAIL. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return admin;
     }
 
+    /**
+     * Looking for Administrator entity in database
+     * NOTE: first should valid fields
+     *
+     * @param email    Administrator e-mail
+     * @param password Administrator password
+     * @return Administrator object
+     */
     public Administrator getAdmin(String email, String password) {
+        log.info("Start looking for Admin by email and password");
         Administrator admin = null;
         Connection connection = null;
         PreparedStatement ps;
@@ -114,19 +148,25 @@ public class AdminDAO {
             while (rs.next()) {
                 admin = mapper.mapRow(rs);
             }
+            log.info("Finish looking for Admin by email and password");
         } catch (SQLException e) {
-            System.out.println("Cant get Administrator by EMAIL and PASSWORD");
-            e.printStackTrace();
+            log.error("Cant get Administrator by EMAIL and PASSWORD. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return admin;
     }
 
+    /**
+     * Looking for all administrator entities and return them in list
+     *
+     * @return List of all administrators from database
+     */
     public List<Administrator> getAllAdmins() {
+        log.info("Start looking for all administrators");
         List<Administrator> admins = new ArrayList<>();
         Connection connection = null;
-        Statement st = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
@@ -136,19 +176,25 @@ public class AdminDAO {
             while (rs.next()) {
                 admins.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for all administrators");
+
         } catch (SQLException e) {
-            System.err.println("cant get all admins list");
-            e.printStackTrace();
+            log.error("cant get all admins list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return admins;
     }
 
+    /**
+     * @param hallName String represents name of hall in hall.name
+     * @return Hall object from database
+     */
     public Hall getHallByName(String hallName) {
+        log.info("Start looking for hall by its name.");
         Hall hall = new Hall();
         Connection connection = null;
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
@@ -160,16 +206,21 @@ public class AdminDAO {
                 hall = mapper.mapRow(rs);
             }
             connection.commit();
+            log.info("Finish looking for hall by its name.");
         } catch (SQLException e) {
-            System.err.println("cant get hall");
-            e.printStackTrace();
+            log.error("cant get hall." + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return hall;
     }
 
+    /**
+     * @param id Hall id should be equals hall.id from database
+     * @return Hall object from database
+     */
     public Hall getHallById(Integer id) {
+        log.info("Start looking for hall by its id");
         Hall hall = new Hall();
         Connection connection = null;
         PreparedStatement ps;
@@ -184,9 +235,9 @@ public class AdminDAO {
                 hall = mapper.mapRow(rs);
             }
             connection.commit();
+            log.info("Finish looking for hall by its id");
         } catch (SQLException e) {
-            System.err.println("cant get hall by id");
-            e.printStackTrace();
+            log.error("cant get hall by id. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
@@ -194,14 +245,15 @@ public class AdminDAO {
     }
 
     /**
-     * Return list of Hall objects from database
+     * Looking for all halls
      *
-     * @return List<Hall>
+     * @return List<Hall> all halls from database with id or empty list if it`s no any
      */
     public List<Hall> getAllHalls() {
+        log.info("Begin looking for all halls");
         List<Hall> allHalls = new ArrayList<>();
         Connection connection = null;
-        Statement st = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
@@ -211,42 +263,57 @@ public class AdminDAO {
             while (rs.next()) {
                 allHalls.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for all halls");
         } catch (SQLException e) {
-            System.err.println("cant get HALLS list");
-            e.printStackTrace();
+            log.error("cant get all Halls list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allHalls;
     }
 
+    /**
+     * Insert new hall into database.
+     * NOTE: use it just for Administrator
+     *
+     * @param hallName name for a new Hall object
+     */
     public void createHall(String hallName) {
+        log.info("Creating new hall");
         Connection connection = null;
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         try {
             connection = DBManager.getInstance().getConnection();
             ps = connection.prepareStatement(INSERT_HALL);
             ps.setString(1, hallName);
             ps.executeUpdate();
+            log.info("Finish creating new hall");
         } catch (SQLException e) {
-            System.err.println("Can`t create hall");
-            e.printStackTrace();
+            log.error("Can`t create hall. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
     }
 
+    /**
+     * Delete hall from database.
+     * NOTE: use it just for Administrator
+     *
+     * @param hallName name for hall witch should be deleted
+     */
     public void deleteHall(String hallName) {
+        log.info("Deleting hall.");
         Connection connection = null;
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         try {
             connection = DBManager.getInstance().getConnection();
             ps = connection.prepareStatement(DELETE_HALL);
             ps.setString(1, hallName);
             ps.executeUpdate();
+            log.info("Finish deleting hall.");
+
         } catch (SQLException e) {
-            System.out.println("cant find hall");
-            e.printStackTrace();
+            log.error("cant delete hall. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
@@ -254,34 +321,45 @@ public class AdminDAO {
 
     /**
      * Insert new language into database
+     *
+     * @param lang new Language object
      */
     public void createLanguage(Language lang) {
+        log.info("Begin insert language.");
         Connection connection = null;
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         try {
             connection = DBManager.getInstance().getConnection();
             ps = connection.prepareStatement(INSERT_LANG);
             ps.setString(1, lang.getLanguageName());
             ps.executeUpdate();
+            log.info("Finish insert language.");
         } catch (SQLException e) {
-            System.err.println("Can`t create new language");
-            e.printStackTrace();
+            log.error("Can`t create new language. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
     }
 
+    /**
+     * Delete language from database.
+     * NOTE: use it just for Administrator
+     *
+     * @param lang name for language witch should be deleted
+     */
     public void deleteLanguage(String lang) {
+        log.info("Begin deleting language.");
         Connection connection = null;
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         try {
             connection = DBManager.getInstance().getConnection();
             ps = connection.prepareStatement(DELETE_LANGUAGE);
             ps.setString(1, lang);
             ps.executeUpdate();
+            log.info("Finish deleting language.");
+
         } catch (SQLException e) {
-            System.out.println("cant delete language hall");
-            e.printStackTrace();
+            log.error("cant delete language hall. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
@@ -294,10 +372,11 @@ public class AdminDAO {
      * @return Language object
      */
     public Language getLanguageByName(String lang) {
+        log.info("Begin looking for language.");
         Language language = new Language();
         Connection connection = null;
-        PreparedStatement ps = null;
         LanguageMapper mapper = new LanguageMapper();
+        PreparedStatement ps;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
@@ -309,20 +388,27 @@ public class AdminDAO {
                 language = mapper.mapRow(rs);
             }
             connection.commit();
+            log.info("Finish looking for language.");
         } catch (SQLException e) {
-            System.err.println("cant get language");
-            e.printStackTrace();
+            log.error("cant get language. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return language;
     }
 
+    /**
+     * Find language in database by its id
+     *
+     * @param id id for compare
+     * @return Language object
+     */
     public Language getLanguageById(Integer id) {
+        log.info("Begin looking for language: " + id);
         Language language = new Language();
         Connection connection = null;
-        PreparedStatement ps = null;
         LanguageMapper mapper = new LanguageMapper();
+        PreparedStatement ps;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
@@ -334,9 +420,9 @@ public class AdminDAO {
                 language = mapper.mapRow(rs);
             }
             connection.commit();
+            log.info("Finish looking for language: " + id);
         } catch (SQLException e) {
-            System.err.println("cant get language by ID");
-            e.printStackTrace();
+            log.error("cant get language by ID:" + id + " .Cause: " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
@@ -346,37 +432,44 @@ public class AdminDAO {
     /**
      * Return list of Language objects from database
      *
-     * @return List<Language>
+     * @return List<Language> all language from database, list empty if not found any
      */
     public List<Language> getAllLanguages() {
+        log.info("Begin looking for all language");
         List<Language> allLanguages = new ArrayList<>();
         Connection connection = null;
         LanguageMapper mapper = new LanguageMapper();
-        Statement st = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
             st = connection.createStatement();
             rs = st.executeQuery(GET_ALL_LANGUAGE);
-
             while (rs.next()) {
                 allLanguages.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for all language");
         } catch (SQLException e) {
-            System.err.println("cant get LANGUAGE list");
-            e.printStackTrace();
+            log.error("cant get LANGUAGE list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allLanguages;
     }
 
+    /**
+     * Looking for exposition by its name
+     *
+     * @param theme name of exposition
+     * @return Exposition object from database
+     */
     public Exposition getExpositionByName(String theme) {
+        log.info("Begin looking for exposition: " + theme);
+        ExpositionMapper mapper = new ExpositionMapper();
         Exposition expo = new Exposition();
         Connection connection = null;
-        PreparedStatement ps = null;
+        PreparedStatement ps;
         ResultSet rs;
-        ExpositionMapper mapper = new ExpositionMapper();
         try {
             connection = DBManager.getInstance().getConnection();
             ps = connection.prepareStatement(GET_EXPO_BY_NAME);
@@ -386,43 +479,54 @@ public class AdminDAO {
                 expo = mapper.mapRow(rs);
             }
             connection.commit();
+            log.info("Finish looking for exposition");
         } catch (SQLException e) {
-            System.err.println("cant get Exposition by Name");
-            e.printStackTrace();
+            log.error("cant get Exposition by Name. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return expo;
     }
 
+    /**
+     * Looking for all Exposition in database
+     *
+     * @return List<Language> all expositions from database, list empty if not found any
+     */
     public List<Exposition> getAllExpositions() {
+        log.info("Begin looking for all expositions.");
         List<Exposition> allExpo = new ArrayList<>();
         Connection connection = null;
         ExpositionMapper mapper = new ExpositionMapper();
-        Statement st = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
             st = connection.createStatement();
             rs = st.executeQuery(GET_ALL_EXPO);
-
             while (rs.next()) {
                 allExpo.add(mapper.mapRow(rs));
             }
+            log.info("Begin looking for all expositions.");
         } catch (SQLException e) {
-            System.err.println("cant get Exposition list");
-            e.printStackTrace();
+            log.error("cant get Exposition list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allExpo;
     }
 
+    /**
+     * Looking for all Exposition in database, sorting by begin_date desc.
+     *
+     * @return List<Language> all expositions from database, list empty if not found any
+     */
     public List<Exposition> sortedExpoByTimeDesc() {
+        log.info("Begin looking for sorted expositions");
         List<Exposition> allExpo = new ArrayList<>();
-        Connection connection = null;
         ExpositionMapper mapper = new ExpositionMapper();
-        Statement st = null;
+        Connection connection = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
@@ -432,20 +536,26 @@ public class AdminDAO {
             while (rs.next()) {
                 allExpo.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for sorted expositions");
         } catch (SQLException e) {
-            System.err.println("cant get sorted Exposition list");
-            e.printStackTrace();
+            log.error("cant get sorted Exposition list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allExpo;
     }
 
+    /**
+     * Looking for all Exposition in database, sorting by begin_date asc.
+     *
+     * @return List<Language> all expositions from database, list empty if not found any
+     */
     public List<Exposition> sortedExpoByTimeAsc() {
+        log.info("Begin looking for sorted expositions");
         List<Exposition> allExpo = new ArrayList<>();
-        Connection connection = null;
         ExpositionMapper mapper = new ExpositionMapper();
-        Statement st = null;
+        Connection connection = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
@@ -455,122 +565,150 @@ public class AdminDAO {
             while (rs.next()) {
                 allExpo.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for sorted expositions");
         } catch (SQLException e) {
-            System.err.println("cant get sorted Exposition list");
-            e.printStackTrace();
+            log.error("cant get sorted Exposition list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allExpo;
     }
 
+    /**
+     * Looking for all Exposition in database, sorting by PRICE asc.
+     *
+     * @return List<Language> all expositions from database, list empty if not found any
+     */
     public List<Exposition> sortedExpoByPriceAsc() {
+        log.info("Begin looking for price sorted expositions");
         List<Exposition> allExpo = new ArrayList<>();
-        Connection connection = null;
         ExpositionMapper mapper = new ExpositionMapper();
-        Statement st = null;
+        Connection connection = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
             st = connection.createStatement();
             rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by price asc");
-
             while (rs.next()) {
                 allExpo.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for price sorted expositions");
         } catch (SQLException e) {
-            System.err.println("cant get sorted Exposition list");
-            e.printStackTrace();
+            log.error("cant get price sorted Exposition list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allExpo;
     }
 
+    /**
+     * Looking for all Exposition in database, sorting by PRICE desc.
+     *
+     * @return List<Language> all expositions from database, list empty if not found any
+     */
     public List<Exposition> sortedExpoByPriceDesc() {
+        log.info("Begin looking for price sorted expositions");
+        ExpositionMapper mapper = new ExpositionMapper();
         List<Exposition> allExpo = new ArrayList<>();
         Connection connection = null;
-        ExpositionMapper mapper = new ExpositionMapper();
-        Statement st = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
             st = connection.createStatement();
             rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by price desc");
-
             while (rs.next()) {
                 allExpo.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for price sorted expositions");
         } catch (SQLException e) {
-            System.err.println("cant get sorted Exposition list");
-            e.printStackTrace();
+            log.error("cant get price sorted Exposition list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allExpo;
     }
+
+    /**
+     * Looking for all Exposition in database, sorting by NAME desc.
+     *
+     * @return List<Language> all expositions from database, list empty if not found any
+     */
     public List<Exposition> sortedExpoByNameDesc() {
+        log.info("Begin looking for name sorted expositions");
         List<Exposition> allExpo = new ArrayList<>();
-        Connection connection = null;
         ExpositionMapper mapper = new ExpositionMapper();
-        Statement st = null;
+        Connection connection = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
             st = connection.createStatement();
             rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by name desc");
-
             while (rs.next()) {
                 allExpo.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for name sorted expositions");
+
         } catch (SQLException e) {
-            System.err.println("cant get sorted Exposition list");
-            e.printStackTrace();
+            log.error("cant get name sorted Exposition list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allExpo;
     }
+
+    /**
+     * Looking for all Exposition in database, sorting by PRICE asc.
+     *
+     * @return List<Language> all expositions from database, list empty if not found any
+     */
     public List<Exposition> sortedExpoByNameAsc() {
+        log.info("Begin looking for name sorted expositions");
         List<Exposition> allExpo = new ArrayList<>();
-        Connection connection = null;
         ExpositionMapper mapper = new ExpositionMapper();
-        Statement st = null;
+        Connection connection = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
             st = connection.createStatement();
             rs = st.executeQuery("SELECT * FROM exposition  where end_date >= now() order by name asc");
-
             while (rs.next()) {
                 allExpo.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for name sorted expositions");
         } catch (SQLException e) {
-            System.err.println("cant get sorted Exposition list");
-            e.printStackTrace();
+            log.error("cant get name sorted Exposition list. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
         return allExpo;
     }
 
+    /**
+     * Looking for all expo in database. Use it in user-cabinet
+     *
+     * @return list of all expositions witch finish AFTER today's date. List is empty if not find any
+     */
     public List<Exposition> allExpositionsForUser() {
+        log.info("Begin looking for expositions for user");
         List<Exposition> allExpo = new ArrayList<>();
-        Connection connection = null;
         ExpositionMapper mapper = new ExpositionMapper();
-        Statement st = null;
+        Connection connection = null;
+        Statement st;
         ResultSet rs;
         try {
             connection = DBManager.getInstance().getConnection();
             st = connection.createStatement();
             rs = st.executeQuery(GET_ALL_EXPO_FROM_TODAY);
-
             while (rs.next()) {
                 allExpo.add(mapper.mapRow(rs));
             }
+            log.info("Finish looking for expositions for user");
         } catch (SQLException e) {
-            System.err.println("cant get Exposition list");
-            e.printStackTrace();
+            log.error("cant get Exposition list for user. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
@@ -583,28 +721,31 @@ public class AdminDAO {
      * @param exposition object created by Administrator cabinet
      */
     public void createExposition(Exposition exposition) {
+        log.info("Begin creation exposition");
         Connection connection = null;
         PreparedStatement ps;
         try {
             connection = DBManager.getInstance().getConnection();
             ps = connection.prepareStatement(INSERT_EXPO);
             ps.setString(1, exposition.getTheme());
-            //change
             ps.setDate(2, java.sql.Date.valueOf(exposition.getBegin().toString()));
-            //change
             ps.setDate(3, java.sql.Date.valueOf(exposition.getEnd().toString()));
-
             ps.setInt(4, exposition.getPrice());
             ps.executeUpdate();
+            log.info("Finish creation exposition");
         } catch (SQLException e) {
-            System.err.println("Can`t insert new expo in database");
-            e.printStackTrace();
+            log.error("can`t insert new expo in database. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
     }
 
+    /**
+     * @param name name of exposition for comparing
+     * @return exposition id from database or NULL if not found any
+     */
     public Integer getExpoId(String name) {
+        log.info("Begin looking for exposition");
         Integer id = null;
         Connection connection = null;
         PreparedStatement ps;
@@ -617,13 +758,12 @@ public class AdminDAO {
             while (rs.next()) {
                 id = rs.getInt(ID);
             }
-
             if (id == null) {
                 throw new IllegalStateException();
             }
+            log.info("Begin looking for exposition");
         } catch (IllegalStateException | SQLException e) {
-            System.out.println("Cant get Exposition ID");
-            e.printStackTrace();
+            log.error("Cant get Exposition ID. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
@@ -631,7 +771,14 @@ public class AdminDAO {
         return id;
     }
 
+    /**
+     * Insert exposition and halls for it into database
+     *
+     * @param expo  Exposition object witch need to set halls
+     * @param halls list of halls for Exposition object
+     */
     public void settHallsForExpo(Exposition expo, List<Hall> halls) {
+        log.info("Begin looking for Expo and Halls");
         Connection conn = null;
         PreparedStatement ps;
         try {
@@ -642,91 +789,117 @@ public class AdminDAO {
                 ps.setInt(2, expo.getId());
                 ps.executeUpdate();
             }
-
-        } catch (SQLException throwables) {
-            System.out.println("cant insert halls for exposition");
-            throwables.printStackTrace();
+            log.info("Finish looking for Expo and Halls");
+        } catch (SQLException e) {
+            log.error("cant insert halls for exposition. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(conn);
         }
     }
 
-    public List<Hall> getHallsForExpo(Exposition expo){
+    /**
+     * find all halls for exposition and return list with Hall objects
+     *
+     * @param expo Exposition object
+     * @return list of halls for this expo
+     */
+    public List<Hall> getHallsForExpo(Exposition expo) {
+        log.info("Begin looking for halls.");
         List<Hall> halls = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ps;
         ResultSet rs;
-        try{
+        try {
             conn = DBManager.getInstance().getConnection();
             ps = conn.prepareStatement(GET_EXPO_HALLS);
-            ps.setInt(1,expo.getId());
+            ps.setInt(1, expo.getId());
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Hall hall = new HallMapper().mapRow(rs);
                 halls.add(hall);
             }
-        } catch (SQLException throwables) {
-            System.err.println("cant get halls for this expo ==>" + expo.getTheme());
-            throwables.printStackTrace();
-        }finally{
+            log.info("Finish looking for halls.");
+        } catch (SQLException e) {
+            log.error("cant get halls for this expo " + expo.getTheme() + "\n cause: " + e);
+        } finally {
             DBManager.getInstance().commitAndClose(conn);
         }
         return halls;
     }
 
+    /**
+     * @param exposition  Exposition for witch set description
+     * @param description Description for exposition
+     * @param language    language id for description
+     */
     public void setDescriptions(Exposition exposition, String description, int language) {
+        log.info("Begin insert description");
         Connection conn = null;
         PreparedStatement ps;
         try {
             conn = DBManager.getInstance().getConnection();
             ps = conn.prepareStatement(INSERT_DESCRIPTION);
-            ps.setInt(1,exposition.getId());
-            ps.setString(2,description);
-            ps.setInt(3,language);
+            ps.setInt(1, exposition.getId());
+            ps.setString(2, description);
+            ps.setInt(3, language);
             ps.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }finally{
+            log.info("Finish insert description");
+        } catch (SQLException e) {
+            log.error("Can`t insert description for expo: " + exposition.getTheme() +
+                    "\n cause: " + e);
+        } finally {
             DBManager.getInstance().commitAndClose(conn);
         }
     }
 
-    public void deleteExpo(Integer id){
+    /**
+     * Delete exposition from database by its ID
+     *
+     * @param id Exposition id
+     */
+    public void deleteExpo(Integer id) {
+        log.info("Begin delete exception");
         Connection conn = null;
         PreparedStatement ps;
         try {
             conn = DBManager.getInstance().getConnection();
             ps = conn.prepareStatement(DELETE_EXPO);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ps.executeUpdate();
-        } catch (SQLException throwables) {
-            System.err.println("cant delete expo");
-            throwables.printStackTrace();
-        }finally{
+            log.info("Finish delete exception");
+        } catch (SQLException e) {
+            log.error("cant delete expo. " + e);
+        } finally {
             DBManager.getInstance().commitAndClose(conn);
         }
     }
 
-    public Integer getVisits(Integer id){
+    /**
+     * Count how many tickets was sold for this exposition
+     *
+     * @param id Exposition id
+     * @return number of bought tickets
+     */
+    public Integer getVisits(Integer id) {
+        log.info("Begin counting tickets for exception.");
         Integer visits = null;
         Connection connection = null;
         PreparedStatement ps;
         ResultSet rs;
         try {
+            if (id == null) {
+                throw new IllegalStateException();
+            }
             connection = DBManager.getInstance().getConnection();
             ps = connection.prepareStatement(GET_TICKETS_COUNT);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             rs = ps.executeQuery();
             while (rs.next()) {
                 visits = rs.getInt(1);
             }
-
-            if (id == null) {
-                throw new IllegalStateException();
-            }
+            log.info("Finish counting tickets for exception.");
         } catch (IllegalStateException | SQLException e) {
-            System.out.println("Cant get Ticket by Expo ID");
-            e.printStackTrace();
+            log.error("Cant get Ticket by Expo ID. " + e);
         } finally {
             DBManager.getInstance().commitAndClose(connection);
         }
@@ -748,7 +921,7 @@ public class AdminDAO {
                 admin.setEmail(resultSet.getString(EMAIL));
                 return admin;
             } catch (SQLException e) {
-                System.err.println("cant get Admin");
+                log.error("cant map Admin. " + e);
                 throw new IllegalStateException(e);
             }
         }
@@ -765,8 +938,7 @@ public class AdminDAO {
                 hall.setId(resultSet.getInt(ID));
                 hall.setHallName(resultSet.getString(NAME));
             } catch (SQLException e) {
-                System.err.println("cant map Hall");
-                e.printStackTrace();
+                log.error("cant map Hall." + e);
             }
 
             return hall;
@@ -785,8 +957,7 @@ public class AdminDAO {
                 lang.setId(resultSet.getInt(ID));
                 lang.setLanguageName(resultSet.getString(NAME));
             } catch (SQLException e) {
-                System.err.println("Can`t map Language");
-                e.printStackTrace();
+                log.error("Can`t map Language. " + e);
             }
             return lang;
         }
@@ -808,8 +979,7 @@ public class AdminDAO {
                 exposition.setPrice(resultSet.getInt(PRICE));
                 exposition.setHalls(new AdminDAO().getHallsForExpo(exposition));
             } catch (SQLException e) {
-                System.err.println("Can`t map exposition");
-                e.printStackTrace();
+                log.error("Can`t map exposition. " + e);
             }
             return exposition;
         }

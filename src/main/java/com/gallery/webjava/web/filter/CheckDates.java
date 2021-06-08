@@ -1,6 +1,7 @@
 package com.gallery.webjava.web.filter;
 
 import com.gallery.webjava.db.DBManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,14 +14,20 @@ import java.sql.Date;
 
 import java.util.*;
 
+/**
+ *Servlet find all dates for choisen halls, when its have expositions and make that dates not available for administrator insert
+ */
+
 @WebServlet("/admin/admin-cabinet/check-dates")
 public class CheckDates extends HttpServlet {
+    private static final Logger log = Logger.getLogger(CheckDates.class);
     RequestDispatcher dispatcher;
     HttpSession session;
     PrintWriter pw;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        log.info("CheckDates filter start working");
         Connection conn = null;
         HashSet<java.sql.Date> dates = new HashSet<>();
         String beginParam = req.getParameter("start-date");
@@ -32,6 +39,7 @@ public class CheckDates extends HttpServlet {
         java.util.Date end;
         if ((beginParam != null || endParam != null)) {
             begin = end = new Date(new java.util.Date().getTime());
+            log.error("begin-date and end-date not choisen");
         } else {
             begin = Date.valueOf(beginParam);
             end = Date.valueOf(endParam);
@@ -48,8 +56,9 @@ public class CheckDates extends HttpServlet {
                     "<a href=\"http://localhost:8080/gallery/admin/admin-cabinet\"> Go to cabinet. </a>" +
                     "</body>" +
                     "</html>");
+            log.error("begin-date is after end-date");
+            log.error("CheckDates filter finish work.");
             return;
-
         }
         session = req.getSession();
         session.setAttribute("begin", req.getParameter("start-date"));
@@ -63,6 +72,8 @@ public class CheckDates extends HttpServlet {
                     "<a href=\"http://localhost:8080/gallery/admin/admin-cabinet\"> Go to cabinet. </a>" +
                     "</body>" +
                     "</html>");
+            log.error("no choisen halls");
+            log.error("CheckDates filter finish work.");
             return;
         }
 
@@ -85,8 +96,8 @@ public class CheckDates extends HttpServlet {
                     dbDates = period(dbBegin, dbEnd);
                     dates.addAll(dbDates);
                 }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                log.error(e);
             } finally {
                 DBManager.getInstance().commitAndClose(conn);
             }
@@ -96,8 +107,15 @@ public class CheckDates extends HttpServlet {
         session.setAttribute("halls", chosenHalls);
         session.setAttribute("availableDates", datesArr(dates));
         dispatcher.forward(req, resp);
+        log.info("CheckDates filter finish work without errors.");
     }
 
+    /**
+     * Make set of dates witch busy in every choisen hall
+     * @param start begin date
+     * @param end end date
+     * @return set of dates witch you cant use for new Exposition
+     */
     private HashSet<java.sql.Date> period(java.util.Date start, java.util.Date end) {
         HashSet<java.sql.Date> list = new HashSet<>();
         Calendar calendar = new GregorianCalendar();
@@ -110,6 +128,12 @@ public class CheckDates extends HttpServlet {
         return list;
     }
 
+    /**
+     * Return String representation of busy bates for halls.
+     * Use it for jQuery
+     * @param d set of unique dates
+     * @return string of dates
+     */
     private String datesArr(HashSet<java.sql.Date> d) {
         StringBuilder sb = new StringBuilder();
 

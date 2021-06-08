@@ -20,7 +20,6 @@ public class LoginServlet extends HttpServlet {
         writer = resp.getWriter();
         session = req.getSession();
         session.setAttribute("email", req.getParameter("email"));
-
         session.setAttribute("password", req.getParameter("password"));
         String email = session.getAttribute("email").toString();
         if (email == null || !checkUser(email)) {

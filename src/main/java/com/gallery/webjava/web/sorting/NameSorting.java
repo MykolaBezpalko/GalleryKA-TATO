@@ -21,7 +21,6 @@ public class NameSorting extends HttpServlet {
     Date today = new Date(new java.util.Date().getTime());
     String typeSort;
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Exposition> allExpo = null;
@@ -33,7 +32,6 @@ public class NameSorting extends HttpServlet {
                 break;
             case "themeEnd":
                 allExpo = admin.sortedExpoByNameDesc();
-                System.out.println(allExpo);
                 break;
         }
         session.setAttribute("allExpo", allExpo);

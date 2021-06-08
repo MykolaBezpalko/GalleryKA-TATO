@@ -46,7 +46,14 @@
         <servlet-name>allExpo</servlet-name>
     </filter-mapping>
 
-
+    <servlet>
+        <servlet-name>loginAdmin</servlet-name>
+        <jsp-file>/pages/admin-pages/login-as-admin.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginAdmin</servlet-name>
+        <url-pattern>/login-admin</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>create-account</servlet-name>
@@ -129,9 +136,7 @@
         <servlet-name>pay-form</servlet-name>
         <url-pattern>/pay-form</url-pattern>
     </servlet-mapping>
-    
-    
-    
+
     <resource-env-ref>
         <description>DataSource</description>
         <resource-env-ref-name>/jdbc/gallery</resource-env-ref-name>
@@ -140,5 +145,8 @@
 
     <listener>
         <listener-class>com.gallery.webjava.web.listener.Listener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.gallery.webjava.web.listener.SessionListener</listener-class>
     </listener>
 </web-app>

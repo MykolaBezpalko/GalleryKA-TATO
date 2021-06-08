@@ -34,7 +34,6 @@ public class DateSort extends HttpServlet {
                 break;
             case "dateFromEnd":
                 allExpo = admin.sortedExpoByTimeDesc();
-                System.out.println(allExpo);
                 break;
         }
         session.setAttribute("allExpo", allExpo);

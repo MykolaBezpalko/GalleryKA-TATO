@@ -34,7 +34,6 @@ public class PriceSorting extends HttpServlet {
                 break;
             case "maxPrice":
                 allExpo = admin.sortedExpoByPriceDesc();
-                System.out.println(allExpo);
                 break;
         }
         session.setAttribute("allExpo", allExpo);

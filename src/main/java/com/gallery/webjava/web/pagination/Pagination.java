@@ -34,7 +34,6 @@ public class Pagination extends HttpServlet {
         session = req.getSession();
         if(session.getAttribute("allExpo")==null){
             resp.sendRedirect("/gallery/datesorting?number=1&sortType=dateFromBegin");
-            System.out.println("redirect to datesort");
             return;
         }
         List<Exposition> allExpo = (List<Exposition>) session.getAttribute("allExpo");

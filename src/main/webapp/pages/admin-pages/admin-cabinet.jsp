@@ -1,11 +1,8 @@
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Calendar" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.gallery.webjava.db.AdminDAO" %>
-<%@ page import="com.gallery.webjava.db.entity.Hall" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="lang"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,21 +34,20 @@
                 </a>
             </div>
         </nav>
-        <div class="mainButtons">
+        <div class="mainButtons" >
             <form id="login" action="logout">
                 <button class="logout btn" form="login">
-                    LOG OUT
+                    <fmt:message key="cabinet.logout"/>
                 </button>
             </form>
-
-            <form id="language" action="#">
-                <button class="language btn" form="language">
+            <div id="language" style="margin-top: 20px">
+                <button class="language btn" type="submit" onclick="setCookie('en')">
                     EN
                 </button>
-                <button class="language btn">
+                <button class="language btn" type="submit" onclick="setCookie('uk')">
                     UA
                 </button>
-            </form>
+            </div>
         </div>
     </section>
     <section class="body-content">

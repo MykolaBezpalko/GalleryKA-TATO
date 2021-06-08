@@ -1,4 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="lang"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,30 +25,35 @@
             <img src="pages/styles/images/close.png" alt="" style="  width: 30px;
             height: 30px">
         </a></div>
-        <p class="create-account">WELCOME BACK!</p>
-        <p class="allready-have">Log in to continue. have no account?</p>
-        <p class="to-login"><a href="http://localhost:8080/gallery/create-account">Register</a></p>
+        <p class="create-account">
+            <fmt:message key="login-page.welcome"/>
+        </p>
+        <p class="allready-have">
+            <fmt:message key="login-page.no-acc"/>
+        </p>
+        <p class="to-login"><a href="http://localhost:8080/gallery/create-account">
+            <fmt:message key="login-page.register"/>
+        </a></p>
 
         <form id="create-account" action="check-data" method="POST">
-            <div class="field"> <p>E-MAIL</p>
+            <div class="field"> <p><fmt:message key="login-page.email"/></p>
                 <input type="email" name="email" placeholder="Your e-mail" form="create-account"  pattern="[^ @]*@[^ @]*" required></div>
 
-            <div class="field"><p>PASSWORD</p>
+            <div class="field"><p><fmt:message key="login-page.password"/></p>
                 <input type="password" name="password" placeholder="Your password" form="create-account"  pattern="[A-Za-z0-9]{4,16}" title="min: 4 max: 16 (Lattin and numbers)"  required></div>
 
             <div class="field" style="width: 50%;">
                 <button class="submit-creation" type="submit" form="create-account">
-                    LOG IN
+                    <fmt:message key="login-page.login"/>
                 </button>
                 <button class="submit-creation" form="logadmin">
-                    LOG IN AS ADMINISTRATOR
+                    <fmt:message key="login-page.login-admin"/>
                 </button>
             </div>
         </form>
-        <form id="logadmin" action="pages/admin-pages/login-as-admin.jsp"></form>
+        <form id="logadmin" action="login-admin"></form>
 
     </div>
 </section>
-
 </body>
 </html>

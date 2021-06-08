@@ -1,5 +1,7 @@
 package com.gallery.webjava.db;
 
+import org.apache.log4j.Logger;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -9,7 +11,7 @@ import java.sql.SQLException;
 
 public class DBManager {
     private static DBManager dbManager;
-
+    private static final Logger log = Logger.getLogger(DBManager.class);
     private DBManager() {
     }
 
@@ -38,20 +40,24 @@ public class DBManager {
             connection = ds.getConnection();
             connection.setAutoCommit(false);
         } catch (NamingException | SQLException e) {
-            e.printStackTrace();
+            log.error("Database Connection fail" + e);
         }
         return connection;
     }
 
+    /**
+     * Close connection and commit changes
+     * @param con connection to database
+     */
     public void commitAndClose(Connection con) {
         try {
-            if(con == null)
-                 new NullPointerException("NULL connection");
+            if(con == null){
+                throw new NullPointerException("connection is NULL");
+            }
             con.commit();
             con.close();
         } catch (SQLException  | NullPointerException e) {
-            System.err.println("cant close connection");
-            e.printStackTrace();
+            log.error("cant close connection." + e);
         }
     }
 

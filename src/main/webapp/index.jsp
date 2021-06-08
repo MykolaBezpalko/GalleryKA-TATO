@@ -1,16 +1,11 @@
-
+<%@ page import="java.util.Arrays" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="tag" uri="/WEB-INF/mytag/mytag.tld" %>
 
-<c:set var="language" value="${not empty sessionScope.language ? sessionScope.language : pageContext.request.locale}"
-       scope="session"/>
-<fmt:setLocale value="${language}"/>
-
 <!DOCTYPE html>
 <html>
-
 <head>
     <head>
         <meta charset="UTF-8">
@@ -24,9 +19,15 @@
     </head>
 </head>
 <body>
-<fmt:setBundle basename="lang"/>
 
 <section class="main-page">
+    <%Cookie lang = new Cookie("lang", "en");%>
+    <c:if test="${param['locale'] != null}">
+        <fmt:setLocale value="${cookie['lang']}" scope="session"/>
+    </c:if>
+
+    <fmt:setLocale value="${cookie['lang'].value}"/>
+    <fmt:setBundle basename="lang"/>
     <section class="header rov text-center text-md-start">
         <nav class="menu navbar navbar-expand-lg navbar-light ">
             <div class="container-fluid">
@@ -43,63 +44,67 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#"><fmt:message
-                                    key="main-page.tickets-visit"/></a>
+                            <a class="nav-link" aria-current="page" href="#">
+                                <fmt:message key="main-page.tickets-visit"/>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">ART & STORIES</a>
+                            <a class="nav-link" href="#">
+                                <fmt:message key="main-page.art-stories"/>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">ABOUT </a>
+                            <a class="nav-link" href="#">
+                                <fmt:message key="main-page.about"/>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">WEBSTORE</a>
+                            <a class="nav-link" href="#">
+                                <fmt:message key="main-page.webstore"/>
+                            </a>
                         </li>
                     </ul>
                 </div>
 
             </div>
         </nav>
-        <div class="mainButtons">
+
+        <div class="mainButtons" style="margin-top: 20px">
             <form id="login" action="login-page">
                 <button class="login btn" form="login">
                     <%--                    <c:set var="user" value="${}"--%>
                     <%--                    <c:if test="${user != null}"--%>
-                    LOG IN
+                    <fmt:message key="login-page.login"/>
                 </button>
             </form>
-
-            <form id="english" action="gallery">
-                <button class="language btn" form="english">
+            <div id="language">
+                <button class="language btn" type="submit" onclick="setCookie('en')">
                     EN
                 </button>
-            </form>
-            <form id="ukrainian" action="lang-ua">
-                <button class="language btn" form="ukrainian">
+                <button class="language btn" type="submit" onclick="setCookie('uk')">
                     UA
                 </button>
-            </form>
+            </div>
         </div>
     </section>
     <div class="slogan">
         <h1><fmt:message key="main-page.slogan"/></h1>
     </div>
 </section>
-
 <div class="sorting" style="display: flex; justify-content: space-around;box-shadow: 0px 1px 0px 0px #918d88;">
 
     <div>
-        <form action="datesorting" id="time" >
+        <form action="datesorting" id="time">
             <input hidden name="number" value="1" form="time">
-            By Date:
-            <button form="time" type="submit" name="sortType" value="dateFromBegin">🠕</button>
+            <fmt:message key="main-page.date-sort"/>
+            <button form="time" type="submit" name="sortType" value="dateFromBegin">🠗</button>
             <button form="time" type="submit" name="sortType" value="dateFromEnd">🠕</button>
         </form>
     </div>
     <div>
         <form action="pricesorting" id="price-sort">
             <input hidden name="number" value="1" form="price-sort">
-            By Price:
+            <fmt:message key="main-page.price-sort"/>
             <button form="price-sort" type="submit" name="sortType" value="minPrice">🠗</button>
             <button form="price-sort" type="submit" name="sortType" value="maxPrice">🠕</button>
         </form>
@@ -107,7 +112,7 @@
     <div>
         <form action="namesorting" id="theme-sort">
             <input hidden name="number" value="1" form="theme-sort">
-            By Theme:
+            <fmt:message key="main-page.name-sort"/>
             <button form="theme-sort" type="submit" name="sortType" value="themeBegin">🠗</button>
             <button form="theme-sort" type="submit" name="sortType" value="themeEnd">🠕</button>
         </form>
@@ -127,13 +132,18 @@
     </tag:pagination>
 </div>
 
-
+<%--change visual --%>
 <section class="actionCall">
-    <p>Objects & Exhibitions</p>
+    <p>
+        <fmt:message key="main-page.objects-expos"/>
+    </p>
     <button class="btn buyBtn" type="button"
-            onclick="window.location.href='http://localhost:8080/gallery/user-cabinet'">BUY TICKET
+            onclick="window.location.href='http://localhost:8080/gallery/user-cabinet'">
+        <fmt:message key="main-page.buy-ticket"/>
     </button>
 </section>
+
+
 <footer>
     <div class="logo">
         <a href="#">KA-TATO<br>GALLERY</a>
@@ -151,6 +161,12 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
         integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
+
+<script>function setCookie(lang) {
+    document.cookie = "lang=" + lang;
+    window.location.reload();
+}</script>
 </body>
 </html>

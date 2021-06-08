@@ -1,11 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="tag" uri="http://tomcat.apache.org/example-taglib" %>
-<%@ page import="com.gallery.webjava.db.entity.Exposition" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.gallery.webjava.db.AdminDAO" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="lang"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,21 +33,20 @@
                 </a>
             </div>
         </nav>
-        <div class="mainButtons">
+        <div class="mainButtons" >
             <form id="login" action="logout">
                 <button class="logout btn" form="login">
-                    LOG OUT
+                    <fmt:message key="cabinet.logout"/>
                 </button>
             </form>
-
-            <form id="language" action="#">
-                <button class="language btn" form="language">
+            <div id="language" style="margin-top: 20px">
+                <button class="language btn" type="submit" onclick="setCookie('en')">
                     EN
                 </button>
-                <button class="language btn">
+                <button class="language btn" type="submit" onclick="setCookie('uk')">
                     UA
                 </button>
-            </form>
+            </div>
         </div>
     </section>
     <section class="body-content pay-form">
@@ -60,11 +57,11 @@
                 <tag:getPrice chosenExpos="${sessionScope.get('choisenExpo')}"></tag:getPrice>
             </h1>
             <form action="buy" id="enterCardData" method="post">
-                <div class="field"><p>CARD NUMBER</p>
+                <div class="field"><p><fmt:message key="pay-form.card-number"/> </p>
                     <input required type="number" minlength="16" maxlength="16" placeholder="Your Card Number"
                            pattern="[0-9]{16}">
                 </div>
-                <div class="field"><p>CARDHOLDER</p>
+                <div class="field"><p><fmt:message key="pay-form.cardholder"/></p>
                     <input required type="text" placeholder="Cardholder">
                 </div>
                 <div class="field">
@@ -100,8 +97,6 @@
         <div class="facebook"><img src="pages/styles/images/FACEBOOK.svg" alt=""></div>
     </div>
 </footer>
-
-
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -111,5 +106,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<script>function setCookie(lang) {
+    document.cookie = "lang=" + lang;
+    window.location.reload();
+}</script>
+
 </body>
 </html>
