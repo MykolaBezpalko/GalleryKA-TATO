@@ -53,7 +53,7 @@
         <div class="picture-pay-form"></div>
         </div>
         <div class="cabinet-workingplace">
-            <h1>Total price is:
+            <h1><fmt:message key="pay-form.total-price"/>
                 <tag:getPrice chosenExpos="${sessionScope.get('choisenExpo')}"></tag:getPrice>
             </h1>
             <form action="buy" id="enterCardData" method="post">
@@ -73,12 +73,12 @@
                 </div>
                 <div class="field buttons">
                     <button class="btn" type="submit" form="enterCardData">
-                        PAY
+                        <fmt:message key="pay-form.pay"/>
                     </button>
 
                     <button class="btn" type="button"
                             onclick="window.location.href='http://localhost:8080/gallery/user-cabinet'">
-                        CANCEL
+                        <fmt:message key="pay-form.cancel"/>
                     </button>
                 </div>
             </form>

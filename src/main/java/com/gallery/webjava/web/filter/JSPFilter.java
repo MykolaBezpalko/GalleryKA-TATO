@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-//@WebFilter("/pages/*")
+
+//зробити недоступними папки юзера і адміна з jsp!!!!
 public class JSPFilter implements Filter {
 
     @Override

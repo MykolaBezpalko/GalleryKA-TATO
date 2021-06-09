@@ -2,12 +2,12 @@
 <%@ page import="com.gallery.webjava.db.entity.Exposition" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.gallery.webjava.db.AdminDAO" %>
-<%@ page import="com.gallery.webjava.db.entity.Hall" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="lang"/>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <head>
         <meta charset="UTF-8">
@@ -36,21 +36,20 @@
                 </a>
             </div>
         </nav>
-        <div class="mainButtons">
-            <form id="login" action="../../logout">
+        <div class="mainButtons" >
+            <form id="login" action="logout">
                 <button class="logout btn" form="login">
-                    LOG OUT
+                    <fmt:message key="cabinet.logout"/>
                 </button>
             </form>
-
-            <form id="language" action="#">
-                <button class="language btn" form="language">
+            <div id="language" style="margin-top: 20px">
+                <button class="language btn" type="submit" onclick="setCookie('en')">
                     EN
                 </button>
-                <button class="language btn">
+                <button class="language btn" type="submit" onclick="setCookie('uk')">
                     UA
                 </button>
-            </form>
+            </div>
         </div>
     </section>
     <section class="body-content">
@@ -58,27 +57,25 @@
             <div class="profile-info">
                 <div class="photo"></div>
                 <p class="role">Administrator</p>
-                <a href="#" class="profile-link">PROFILE</a>
-                <a href="http://localhost:8080/gallery/admin/admin-cabinet" class="profile-link">NEW EVENT</a>
-                <a href="http://localhost:8080/gallery/admin/admin-cabinet/statistic" class="profile-link">STATISTICS</a>
-                <a href="#" class="profile-link active">SEE ALL EVENTS</a>
-
+                <a href="#" class="profile-link"><fmt:message key="cabinet.profile"/></a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet" class="profile-link"><fmt:message key="admin-cabinet.new-event"/></a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet/statistic" class="profile-link"><fmt:message key="admin-cabinet.statistic"/></a>
+                <a href="#" class="profile-link active"><fmt:message key="admin-cabinet.all-events"/></a>
             </div>
         </div>
         <div class="cabinet-workingplace">
-
-            <h1>All Expositions List</h1>
+            <h1><fmt:message key="admin-cabinet.all-expo-list"/></h1>
             <%
                 List<Exposition> expositions = new AdminDAO().getAllExpositions();
                 request.setAttribute("expositions", expositions);%>
             <table style="border: 2px solid #8F755D; width: 80%"
                    class="table table-striped">
                 <tr>
-                    <td>NAME</td>
-                    <td>HALLS</td>
-                    <td>PRICE</td>
-                    <td>BEGIN</td>
-                    <td>END</td>
+                    <td><b><fmt:message key="admin-cabinet.theme"/></b></td>
+                    <td><b><fmt:message key="admin-cabinet.halls"/></b></td>
+                    <td><b><fmt:message key="admin-cabinet.price"/></b></td>
+                    <td><b><fmt:message key="admin-cabinet.begin-date"/></b></td>
+                    <td><b><fmt:message key="admin-cabinet.end-date"/></b></td>
                     <td></td>
                 </tr>
                 <c:forEach items="${expositions}" var="expo">
@@ -88,8 +85,7 @@
                         </td>
                         <td>
                             <c:forEach items="${expo.getHalls()}" var="hall">
-                              <c:out value="${hall.getHallName()}"/>
-                                <br>
+                              <c:out value="${hall.getHallName()}"/><br>
                             </c:forEach>
                         </td>
                         <td>
@@ -103,25 +99,25 @@
                         </td>
                         <td>
                             <form action="all-expo/delete-expo" method="post">
-                                <button class="btn" type="submit" name="expo_id" value="${expo.getId()}">Delete</button>
+                                <button class="btn" type="submit" name="expo_id" value="${expo.getId()}">
+                                    <fmt:message key="admin-cabinet.delete"/>
+                                </button>
                             </form>
                         </td>
                     </tr>
                 </c:forEach>
             </table>
-
-
         </div>
-
     </section>
-
-
 </section>
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
+<script>function setCookie(lang) {
+    document.cookie = "lang=" + lang;
+    window.location.reload();
+}</script>
 </body>
 
 </html>

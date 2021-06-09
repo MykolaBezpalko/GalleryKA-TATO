@@ -55,43 +55,37 @@
             <div class="profile-info">
                 <div class="photo"></div>
                 <p class="role">Administrator</p>
-                <a href="#" class="profile-link">PROFILE</a>
-                <a href="#" class="profile-link active">NEW EVENT</a>
-                <a href="http://localhost:8080/gallery/admin/admin-cabinet/statistic" class="profile-link">STATISTICS</a>
-                <a href="http://localhost:8080/gallery/admin/admin-cabinet/all-expo" class="profile-link">SEE ALL EVENTS</a>
+                <a href="#" class="profile-link"><fmt:message key="cabinet.profile"/></a>
+                <a href="#" class="profile-link active"><fmt:message key="admin-cabinet.new-event"/></a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet/statistic" class="profile-link"><fmt:message key="admin-cabinet.statistic"/></a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet/all-expo" class="profile-link"><fmt:message key="admin-cabinet.all-events"/> </a>
             </div>
         </div>
         <div class="cabinet-workingplace">
-
-            <h1>Create A New Event</h1>
-
+            <h1><fmt:message key="admin-cabinet.create-new-ev"/></h1>
             <form action="${pageContext.request.contextPath}/create-event" id="create-expo" method="POST">
                 <div class="top">
                     <div class="left">
                         <div class="item">
-                            <p class="title-item">THEME
+                            <p class="title-item"><fmt:message key="admin-cabinet.theme"/>
                             </p>
                             <input type="text" name="theme" placeholder="Insert Theme" form="create-expo" required>
                         </div>
-
                         <div class="item">
-                            <label for="price">Insert Price</label>
+                            <label for="price"><fmt:message key="admin-cabinet.insert-price"/></label>
                             <input form="create-expo" id="price" name="price" type="number" value="0" required>
                         </div>
-
                         <div class="item">
-                            <p>Event Description(UA)</p>
+                            <p><fmt:message key="admin-cabinet.descr-ua"/></p>
                             <input type="text" name="description-ua" required>
                         </div>
-
                         <div class="item">
-                            <p>Event Description(EN)</p>
+                            <p><fmt:message key="admin-cabinet.descr-en"/></p>
                             <input type="text" name="description-en" required>
                         </div>
-
                     </div>
                 </div>
-                <button class="btn create" form="create-expo" type="submit">CREATE</button>
+                <button class="btn create" form="create-expo" type="submit"><fmt:message key="admin-cabinet.create"/> </button>
             </form>
         </div>
     </section>
@@ -99,5 +93,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous"></script>
+<script>function setCookie(lang) {
+    document.cookie = "lang=" + lang;
+    window.location.reload();
+}</script>
 </body>
 </html>

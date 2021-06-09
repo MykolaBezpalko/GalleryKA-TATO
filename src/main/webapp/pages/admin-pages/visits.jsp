@@ -4,7 +4,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.gallery.webjava.db.AdminDAO" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie['lang'].value}"/>
+<fmt:setBundle basename="lang"/>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,20 +39,19 @@
             </div>
         </nav>
         <div class="mainButtons">
-            <form id="login" action="../../logout">
+            <form id="login" action="logout">
                 <button class="logout btn" form="login">
-                    LOG OUT
+                    <fmt:message key="cabinet.logout"/>
                 </button>
             </form>
-
-            <form id="language" action="#">
-                <button class="language btn" form="language">
+            <div id="language" style="margin-top: 20px">
+                <button class="language btn" type="submit" onclick="setCookie('en')">
                     EN
                 </button>
-                <button class="language btn">
+                <button class="language btn" type="submit" onclick="setCookie('uk')">
                     UA
                 </button>
-            </form>
+            </div>
         </div>
     </section>
     <section class="body-content">
@@ -58,23 +59,24 @@
             <div class="profile-info">
                 <div class="photo"></div>
                 <p class="role">Administrator</p>
-                <a href="#" class="profile-link">PROFILE</a>
-                <a href="http://localhost:8080/gallery/admin/admin-cabinet" class="profile-link">NEW EVENT</a>
-                <a href="#" class="profile-link active">STATISTICS</a>
-                <a href="http://localhost:8080/gallery/admin/admin-cabinet/all-expo" class="profile-link">SEE ALL EVENTS</a>
+                <a href="#" class="profile-link"><fmt:message key="cabinet.profile"/></a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet" class="profile-link"><fmt:message
+                        key="admin-cabinet.new-event"/></a>
+                <a href="#" class="profile-link active"><fmt:message key="admin-cabinet.statistic"/></a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet/all-expo" class="profile-link"><fmt:message
+                        key="admin-cabinet.all-events"/></a>
             </div>
         </div>
         <div class="cabinet-workingplace">
-
-            <h1>Visit Statistic</h1>
+            <h1><fmt:message key="admin-cabinet.visit-statistic"/></h1>
             <%
                 List<Exposition> expositions = new AdminDAO().getAllExpositions();
                 request.setAttribute("expositions", expositions);%>
             <table style="border: 2px solid #8F755D; width: 60%"
                    class="table table-striped">
                 <tr>
-                    <td><b>Exposition</b></td>
-                    <td><b>TOTAL TICKETS</b></td>
+                    <td><b><fmt:message key="admin-cabinet.theme"/></b></td>
+                    <td><b><fmt:message key="admin-cabinet.total-tickets"/></b></td>
                 </tr>
                 <c:forEach items="${expositions}" var="expo">
                     <tr>
@@ -88,16 +90,16 @@
                 </c:forEach>
             </table>
         </div>
-
     </section>
-
-
 </section>
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous">
+</script>
+<script>function setCookie(lang) {
+    document.cookie = "lang=" + lang;
+    window.location.reload();
+}</script>
 </body>
 
 </html>
