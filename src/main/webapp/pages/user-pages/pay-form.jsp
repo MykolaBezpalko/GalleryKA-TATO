@@ -52,8 +52,8 @@
     <section class="body-content pay-form">
         <div class="picture-pay-form"></div>
         </div>
-        <div class="cabinet-workingplace">
-            <h1><fmt:message key="pay-form.total-price"/>
+        <div class="cabinet-workingplace insert-info">
+            <h1><fmt:message key="pay-form.total-price"/><br>
                 <tag:getPrice chosenExpos="${sessionScope.get('choisenExpo')}"></tag:getPrice>
             </h1>
             <form action="buy" id="enterCardData" method="post">

@@ -37,14 +37,14 @@ public class CardTag extends TagSupport {
     public int doStartTag() throws JspException {
         JspWriter writer = pageContext.getOut();
         try {
-            writer.println("<div class=\"card\" style=\"width: 300px; height: 350px; background-color: aliceblue;\">\n" +
-                    "<h3 class=\"hallName\">" + hallName + "</h3>\n" +
-                    "<div class=\"expo-photo\" style=\"width: 100%; height: 200px;\"></div>\n" +
+            writer.println("<div class=\"card\">\n" +
+                    "<p class=\"hallName\">" + hallName + "</p>\n" +
+                    "<div class=\"expo-photo\"></div>\n" +
                     "<p class=\"expoName\">" + expoTheme + "</p>" +
                     "<p class=\"period\">" + beginDate + " - " + endDate + " </p>\n" +
                     "<form action=\"user-cabinet/buy-ticket-pack\" method=\"GET\">\n" +
                     "    <input type=\"hidden\" value=\"" + expoTheme + "\" name=\"EXPO\">\n" +
-                    "    <button type=\"buyBtn\"  class=\"price\">" + price + "</button>\n" +
+                    "    <button type=\"buyBtn\"  class=\"price\">" + price + " UAH</button>\n" +
                     "</form>\n" +
                     "</div>");
         } catch (IOException e) {

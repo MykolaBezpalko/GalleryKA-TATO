@@ -294,6 +294,53 @@ input {
   background-color: transparent;
 }
 
+.pay-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 87.5%;
+  width: 100%;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.pay-form .picture-pay-form {
+  width: 50%;
+  height: 100%;
+  background-image: url("images/pay-form-img.png");
+  background-size: contain;
+  background-position: center;
+}
+
+.pay-form .insert-info {
+  width: 50%;
+  height: 100%;
+}
+
+.pay-form .insert-info h1 {
+  text-align: center;
+  padding-top: 0;
+}
+
+#enterCardData {
+  -ms-flex-item-align: center;
+      align-self: center;
+  width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#enterCardData .field > p {
+  padding-top: 10px;
+}
+
 footer {
   display: -webkit-box;
   display: -ms-flexbox;

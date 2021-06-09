@@ -87,7 +87,7 @@
             </div>
         </nav>
         <div class="mainButtons" >
-            <form id="login" action="logout">
+            <form id="login" action="/gallery/logout">
                 <button class="logout btn" form="login">
                     <fmt:message key="cabinet.logout"/>
                 </button>

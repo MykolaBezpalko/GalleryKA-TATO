@@ -91,30 +91,30 @@
         <h1><fmt:message key="main-page.slogan"/></h1>
     </div>
 </section>
-<div class="sorting" style="display: flex; justify-content: space-around;box-shadow: 0px 1px 0px 0px #918d88;">
+<div class="sorting" style="display: flex; justify-content: space-around;">
 
     <div>
         <form action="datesorting" id="time">
             <input hidden name="number" value="1" form="time">
             <fmt:message key="main-page.date-sort"/>
-            <button form="time" type="submit" name="sortType" value="dateFromBegin">🠗</button>
-            <button form="time" type="submit" name="sortType" value="dateFromEnd">🠕</button>
+            <button class="sortBtn" form="time" type="submit" name="sortType" value="dateFromBegin">🠗</button>
+            <button  class="sortBtn" form="time" type="submit" name="sortType" value="dateFromEnd">🠕</button>
         </form>
     </div>
     <div>
         <form action="pricesorting" id="price-sort">
             <input hidden name="number" value="1" form="price-sort">
             <fmt:message key="main-page.price-sort"/>
-            <button form="price-sort" type="submit" name="sortType" value="minPrice">🠗</button>
-            <button form="price-sort" type="submit" name="sortType" value="maxPrice">🠕</button>
+            <button  class="sortBtn" form="price-sort" type="submit" name="sortType" value="minPrice">🠗</button>
+            <button  class="sortBtn" form="price-sort" type="submit" name="sortType" value="maxPrice">🠕</button>
         </form>
     </div>
     <div>
         <form action="namesorting" id="theme-sort">
             <input hidden name="number" value="1" form="theme-sort">
             <fmt:message key="main-page.name-sort"/>
-            <button form="theme-sort" type="submit" name="sortType" value="themeBegin">🠗</button>
-            <button form="theme-sort" type="submit" name="sortType" value="themeEnd">🠕</button>
+            <button  class="sortBtn" form="theme-sort" type="submit" name="sortType" value="themeBegin">🠗</button>
+            <button  class="sortBtn" form="theme-sort" type="submit" name="sortType" value="themeEnd">🠕</button>
         </form>
     </div>
 </div>
@@ -137,7 +137,7 @@
     <p>
         <fmt:message key="main-page.objects-expos"/>
     </p>
-    <button class="btn buyBtn" type="button"
+    <button class="btn actionCallBtn" type="button"
             onclick="window.location.href='http://localhost:8080/gallery/user-cabinet'">
         <fmt:message key="main-page.buy-ticket"/>
     </button>
