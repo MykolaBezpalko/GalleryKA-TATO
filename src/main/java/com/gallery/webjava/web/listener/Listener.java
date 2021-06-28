@@ -9,7 +9,6 @@ public class Listener implements ServletContextListener {
     private static final Logger log = Logger.getLogger(Listener.class);
     public void contextDestroyed(ServletContextEvent event) {
         log.info("Servlet context destruction starts");
-        // do nothing
         log.info("Servlet context destruction finished");
     }
 }

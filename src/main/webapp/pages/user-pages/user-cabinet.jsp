@@ -1,6 +1,7 @@
 <%@ page import="com.gallery.webjava.db.entity.Exposition" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.gallery.webjava.db.AdminDAO" %>
+<%@ page import="com.gallery.webjava.db.DBManager" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -66,7 +67,7 @@
         </div>
         <div class="cabinet-workingplace">
             <%
-                List<Exposition> allExpo = new AdminDAO().allExpositionsForUser();
+                List<Exposition> allExpo = new AdminDAO(DBManager.getInstance()).allExpositionsForUser();
                 request.setAttribute("allExpo", allExpo);
             %>
             <h1><fmt:message key="cabinet.buy-tickets"/></h1>

@@ -94,4 +94,4 @@ right outer join hall_exposition on hall.id = hall_id
 right outer join exposition  on hall_exposition.exposition_id = exposition.id
 cross join description on exposition.id = description.exposition_id;
 
-SELECT count(*) FROM TICKET WHERE  EXPOSITION_ID =1;
+select * from exposition order by start_date desc;

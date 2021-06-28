@@ -1,5 +1,6 @@
 package com.gallery.webjava.web;
 
+import com.gallery.webjava.db.DBManager;
 import com.gallery.webjava.db.UserDAO;
 import com.gallery.webjava.db.entity.User;
 
@@ -27,7 +28,7 @@ public class LoginServlet extends HttpServlet {
             dispatcher.forward(req, resp);
         } else {
             String password = session.getAttribute("password").toString();
-            User user = new UserDAO().getUser(email,password);
+            User user = new UserDAO(DBManager.getInstance()).getUser(email,password);
             session.setAttribute("user", user);
             if (user != null) {
                 writer.println("<html>" +
@@ -50,7 +51,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     public static boolean checkUser(String email) {
-        User u = new UserDAO().getUserByEmail(email);
+        User u = new UserDAO(DBManager.getInstance()).getUserByEmail(email);
         if (u != null) {
             return true;
         } else {

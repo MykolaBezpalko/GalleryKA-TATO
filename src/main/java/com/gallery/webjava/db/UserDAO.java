@@ -17,7 +17,10 @@ import java.sql.SQLException;
  */
 public class UserDAO {
     private static final Logger log = Logger.getLogger(UserDAO.class);
-
+    private Manager dbManager;
+    public UserDAO(Manager dbManager){
+        this.dbManager = dbManager;
+    }
     /**
      * Insert new User into database
      * @param user new User
@@ -27,7 +30,7 @@ public class UserDAO {
         Connection connection = null;
         PreparedStatement ps;
         try {
-            connection = DBManager.getInstance().getConnection();
+            connection = dbManager.getConnection();
             ps = connection.prepareStatement(CREATE_USER);
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getPassword());
@@ -37,7 +40,7 @@ public class UserDAO {
         } catch (SQLException e) {
             log.error("Can`t create User. " + e);
         } finally {
-            DBManager.getInstance().commitAndClose(connection);
+            dbManager.commitAndClose(connection);
         }
     }
 
@@ -54,7 +57,7 @@ public class UserDAO {
         PreparedStatement ps;
         ResultSet rs;
         try {
-            connection = DBManager.getInstance().getConnection();
+            connection = dbManager.getConnection();
             ps = connection.prepareStatement(GET_USER_BY_EMAIL);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -64,9 +67,8 @@ public class UserDAO {
             log.info("Finish looking for user into database");
         } catch (SQLException e) {
             log.error("Cant get USER by EMAIL. " + e);
-            e.printStackTrace();
         } finally {
-            DBManager.getInstance().commitAndClose(connection);
+            dbManager.commitAndClose(connection);
         }
         return user;
     }
@@ -86,7 +88,7 @@ public class UserDAO {
         ResultSet rs;
         UserMapper mapper = new UserMapper();
         try {
-            connection = DBManager.getInstance().getConnection();
+            connection = dbManager.getConnection();
             ps = connection.prepareStatement(GET_USER);
             ps.setString(1, email);
             ps.setString(2, Encoder.encode(password));
@@ -96,9 +98,9 @@ public class UserDAO {
             }
             log.info("Finish looking for user by email and password");
         } catch (SQLException e) {
-            System.err.println("Cant get USER by EMAIL and password. " + e);
+            log.error("Cant get USER by EMAIL and password. " + e);
         } finally {
-            DBManager.getInstance().commitAndClose(connection);
+            dbManager.commitAndClose(connection);
         }
         return user;
     }
@@ -115,7 +117,7 @@ public class UserDAO {
         PreparedStatement ps;
         ResultSet rs;
         try {
-            conn = DBManager.getInstance().getConnection();
+            conn = dbManager.getConnection();
             ps = conn.prepareStatement(GET_USER_ID);
             ps.setString(1, email);
             rs = ps.executeQuery();
@@ -126,7 +128,7 @@ public class UserDAO {
         } catch (SQLException e) {
             log.error("Cant find user id with email: " + email + "\ncause: " + e );
         }finally{
-            DBManager.getInstance().commitAndClose(conn);
+            dbManager.commitAndClose(conn);
         }
         return id;
     }
@@ -141,7 +143,7 @@ public class UserDAO {
         Connection conn = null;
         PreparedStatement ps;
         try{
-            conn = DBManager.getInstance().getConnection();
+            conn = dbManager.getConnection();
             ps = conn.prepareStatement(CREATE_TICKET);
             ps.setInt(1,user.getId());
             ps.setInt(2,exposition.getId());
@@ -150,7 +152,7 @@ public class UserDAO {
         } catch (SQLException e) {
             log.error("Cant insert ticket for user. " + e);
         }finally{
-            DBManager.getInstance().commitAndClose(conn);
+            dbManager.commitAndClose(conn);
         }
     }
 
@@ -167,7 +169,7 @@ public class UserDAO {
                 user.setUserName(resultSet.getString(NAME));
                 user.setPassword(resultSet.getString(PASSWORD));
                 user.setEmail(resultSet.getString(EMAIL));
-                user.setLanguage(new AdminDAO().getLanguageById(resultSet.getInt(LANGUAGE_ID)));
+                user.setLanguage(new AdminDAO(DBManager.getInstance()).getLanguageById(resultSet.getInt(LANGUAGE_ID)));
             } catch (SQLException e) {
                 log.error("Can`t map exposition. " + e);
             }

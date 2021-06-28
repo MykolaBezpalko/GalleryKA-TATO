@@ -9,9 +9,10 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DBManager {
-    private static DBManager dbManager;
+public class DBManager implements Manager {
     private static final Logger log = Logger.getLogger(DBManager.class);
+    private static DBManager dbManager;
+
     private DBManager() {
     }
 
@@ -20,10 +21,12 @@ public class DBManager {
      *
      * @return DBManager instance
      */
-    public static synchronized DBManager getInstance() {
-        if (dbManager == null)
-            dbManager = new DBManager();
-        return dbManager;
+
+    public static Manager getInstance() {
+            if (dbManager == null)
+                dbManager = new DBManager();
+            return dbManager;
+
     }
 
     /**
@@ -40,7 +43,7 @@ public class DBManager {
             connection = ds.getConnection();
             connection.setAutoCommit(false);
         } catch (NamingException | SQLException e) {
-            log.error("Database Connection fail" + e);
+            log.error("Database Connection fail " + e);
         }
         return connection;
     }

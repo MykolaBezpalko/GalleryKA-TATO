@@ -1,6 +1,7 @@
 package com.gallery.webjava.web;
 
 import com.gallery.webjava.db.AdminDAO;
+import com.gallery.webjava.db.DBManager;
 import com.gallery.webjava.db.UserDAO;
 import com.gallery.webjava.db.entity.Exposition;
 import com.gallery.webjava.db.entity.User;
@@ -21,15 +22,13 @@ public class BuyTicket extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter pw = resp.getWriter();
         HttpSession session = req.getSession();
-        UserDAO udao = new UserDAO();
+        UserDAO udao = new UserDAO(DBManager.getInstance());
         List<String> chosenExpo = (List<String>) session.getAttribute("choisenExpo");
         User user = udao.getUserByEmail((String) session.getAttribute("email"));
         for (String s : chosenExpo) {
-            Exposition exposition = new AdminDAO().getExpositionByName(s);
+            Exposition exposition = new AdminDAO(DBManager.getInstance()).getExpositionByName(s);
             udao.createTicket(user, exposition);
-            System.out.println(s);
         }
-
 
         pw.println("<html>" +
                 "<body style=\"text-align:center;\">" +

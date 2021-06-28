@@ -1,5 +1,6 @@
 package com.gallery.webjava.web;
 
+import com.gallery.webjava.db.DBManager;
 import com.gallery.webjava.db.Encoder;
 import com.gallery.webjava.db.UserDAO;
 import com.gallery.webjava.db.entity.User;
@@ -31,7 +32,7 @@ public class CreateAccount extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UserDAO uDao = new UserDAO();
+        UserDAO uDao = new UserDAO(DBManager.getInstance());
         HttpSession session = req.getSession();
         writer = resp.getWriter();
 

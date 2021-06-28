@@ -1,6 +1,7 @@
 package com.gallery.webjava.web;
 
 import com.gallery.webjava.db.AdminDAO;
+import com.gallery.webjava.db.DBManager;
 import com.gallery.webjava.db.entity.Administrator;
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
@@ -62,7 +63,7 @@ public class LoginAdmin extends HttpServlet {
             dispatcher.forward(req, resp);
         } else {
             String password = session.getAttribute("password").toString();
-            Administrator admin = new AdminDAO().getAdmin(email, password);
+            Administrator admin = new AdminDAO(DBManager.getInstance()).getAdmin(email, password);
             session.setAttribute("user", admin);
             if (admin != null) {
                 resp.sendRedirect("/gallery/admin/admin-cabinet");
@@ -75,7 +76,7 @@ public class LoginAdmin extends HttpServlet {
     }
 
     private boolean checkAdmin(String email) {
-        Administrator u = new AdminDAO().getAdminByEmail(email);
+        Administrator u = new AdminDAO(DBManager.getInstance()).getAdminByEmail(email);
         if (u != null) {
             return true;
         }

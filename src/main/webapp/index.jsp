@@ -77,7 +77,7 @@
                     <fmt:message key="login-page.login"/>
                 </button>
             </form>
-            <div id="language">
+            <div id="language" style="    align-items: center;display: flex;">
                 <button class="language btn" type="submit" onclick="setCookie('en')">
                     EN
                 </button>
@@ -98,23 +98,23 @@
             <input hidden name="number" value="1" form="time">
             <fmt:message key="main-page.date-sort"/>
             <button class="sortBtn" form="time" type="submit" name="sortType" value="dateFromBegin">🠗</button>
-            <button  class="sortBtn" form="time" type="submit" name="sortType" value="dateFromEnd">🠕</button>
+            <button class="sortBtn" form="time" type="submit" name="sortType" value="dateFromEnd">🠕</button>
         </form>
     </div>
     <div>
         <form action="pricesorting" id="price-sort">
             <input hidden name="number" value="1" form="price-sort">
             <fmt:message key="main-page.price-sort"/>
-            <button  class="sortBtn" form="price-sort" type="submit" name="sortType" value="minPrice">🠗</button>
-            <button  class="sortBtn" form="price-sort" type="submit" name="sortType" value="maxPrice">🠕</button>
+            <button class="sortBtn" form="price-sort" type="submit" name="sortType" value="minPrice">🠗</button>
+            <button class="sortBtn" form="price-sort" type="submit" name="sortType" value="maxPrice">🠕</button>
         </form>
     </div>
     <div>
         <form action="namesorting" id="theme-sort">
             <input hidden name="number" value="1" form="theme-sort">
             <fmt:message key="main-page.name-sort"/>
-            <button  class="sortBtn" form="theme-sort" type="submit" name="sortType" value="themeBegin">🠗</button>
-            <button  class="sortBtn" form="theme-sort" type="submit" name="sortType" value="themeEnd">🠕</button>
+            <button class="sortBtn" form="theme-sort" type="submit" name="sortType" value="themeBegin">🠗</button>
+            <button class="sortBtn" form="theme-sort" type="submit" name="sortType" value="themeEnd">🠕</button>
         </form>
     </div>
 </div>

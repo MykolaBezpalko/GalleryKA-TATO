@@ -1,6 +1,7 @@
 package com.gallery.webjava.web.filter;
 
 import com.gallery.webjava.db.DBManager;
+import com.gallery.webjava.db.Manager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;

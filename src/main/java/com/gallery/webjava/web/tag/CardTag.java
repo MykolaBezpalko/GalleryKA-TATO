@@ -1,12 +1,15 @@
 package com.gallery.webjava.web.tag;
 
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
 public class CardTag extends TagSupport {
+    static final Logger logger = Logger.getLogger(CardTag.class);
     String expoTheme;
     String hallName;
     String beginDate;
@@ -48,10 +51,8 @@ public class CardTag extends TagSupport {
                     "</form>\n" +
                     "</div>");
         } catch (IOException e) {
-
-            e.printStackTrace();
+            logger.error(e);
         }
-
         return SKIP_BODY;
     }
 }

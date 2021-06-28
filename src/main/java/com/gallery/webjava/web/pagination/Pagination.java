@@ -1,6 +1,7 @@
 package com.gallery.webjava.web.pagination;
 
 import com.gallery.webjava.db.AdminDAO;
+import com.gallery.webjava.db.DBManager;
 import com.gallery.webjava.db.entity.Exposition;
 
 import javax.servlet.ServletException;
@@ -13,7 +14,8 @@ import java.util.*;
 
 @WebServlet("/page")
 public class Pagination extends HttpServlet {
-    AdminDAO admin = new AdminDAO();
+
+    AdminDAO admin = new AdminDAO(DBManager.getInstance());
     HttpSession session;
     Date today = new Date(new java.util.Date().getTime());
 

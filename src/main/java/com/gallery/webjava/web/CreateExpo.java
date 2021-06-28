@@ -1,7 +1,10 @@
 package com.gallery.webjava.web;
 
 import com.gallery.webjava.db.AdminDAO;
+import com.gallery.webjava.db.DBManager;
+import com.gallery.webjava.db.UserDAO;
 import com.gallery.webjava.db.entity.*;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,12 +15,13 @@ import java.io.PrintWriter;
 
 @WebServlet("/create-event")
 public class CreateExpo extends HttpServlet {
+    private static final Logger log = Logger.getLogger(CreateExpo.class);
     PrintWriter pw;
     HttpSession session;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        AdminDAO admin = new AdminDAO();
+        AdminDAO admin = new AdminDAO(DBManager.getInstance());
         session = req.getSession();
         pw = resp.getWriter();
         Exposition expo = new Exposition();
@@ -56,8 +60,7 @@ public class CreateExpo extends HttpServlet {
             admin.setDescriptions(expo, description_ua, 2);
 
         } catch (IllegalStateException | NumberFormatException e) {
-            System.out.println("Cant create expo from admin cabinet");
-            e.printStackTrace();
+            log.error("Cant create expo from admin cabinet");
         }
         resp.sendRedirect("http://localhost:8080/gallery/admin/admin-cabinet");
     }

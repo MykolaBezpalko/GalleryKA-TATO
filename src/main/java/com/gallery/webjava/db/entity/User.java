@@ -1,7 +1,6 @@
 package com.gallery.webjava.db.entity;
 
 public class User extends Entity<Entity> {
-
     private Language language;
     private String userName;
     private String password;

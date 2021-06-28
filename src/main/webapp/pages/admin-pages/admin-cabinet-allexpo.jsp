@@ -2,6 +2,7 @@
 <%@ page import="com.gallery.webjava.db.entity.Exposition" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.gallery.webjava.db.AdminDAO" %>
+<%@ page import="com.gallery.webjava.db.DBManager" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${cookie['lang'].value}"/>
@@ -66,7 +67,7 @@
         <div class="cabinet-workingplace">
             <h1><fmt:message key="admin-cabinet.all-expo-list"/></h1>
             <%
-                List<Exposition> expositions = new AdminDAO().getAllExpositions();
+                List<Exposition> expositions = new AdminDAO(DBManager.getInstance()).getAllExpositions();
                 request.setAttribute("expositions", expositions);%>
             <table style="border: 2px solid #8F755D; width: 80%"
                    class="table table-striped">

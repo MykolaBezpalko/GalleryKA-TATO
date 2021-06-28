@@ -2,6 +2,7 @@
 <%@ page import="com.gallery.webjava.db.entity.Hall" %>
 <%@ page import="com.gallery.webjava.db.AdminDAO" %>
 <%@ page import="java.util.*" %>
+<%@ page import="com.gallery.webjava.db.DBManager" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -141,7 +142,7 @@
                         <div class="item">
                             <p class="title-item"><fmt:message key="admin-cabinet.all-halls"/></p>
                             <%
-                                List<Hall> halls = new AdminDAO().getAllHalls();
+                                List<Hall> halls = new AdminDAO(DBManager.getInstance()).getAllHalls();
                                 request.setAttribute("halls", halls);
                             %>
                             <ul>
