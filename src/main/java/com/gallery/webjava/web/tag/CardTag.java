@@ -1,12 +1,15 @@
 package com.gallery.webjava.web.tag;
 
 
+import org.apache.log4j.Logger;
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
 public class CardTag extends TagSupport {
+    static final Logger logger = Logger.getLogger(CardTag.class);
     String expoTheme;
     String hallName;
     String beginDate;
@@ -34,24 +37,22 @@ public class CardTag extends TagSupport {
     }
 
     @Override
-    public int doStartTag() throws JspException{
+    public int doStartTag() throws JspException {
         JspWriter writer = pageContext.getOut();
         try {
-            writer.println("<div class=\"card\" style=\"width: 300px; height: 350px; background-color: aliceblue;\">\n" +
-                    "<h3 class=\"hallName\">" + hallName + "</h3>\n" +
-                    "<div class=\"photo\" style=\"width: 100%; height: 200px;\">some photo</div>\n" +
-                    "<p class=\"expoName\">"+expoTheme+"</p>" +
+            writer.println("<div class=\"card\">\n" +
+                    "<p class=\"hallName\">" + hallName + "</p>\n" +
+                    "<div class=\"expo-photo\"></div>\n" +
+                    "<p class=\"expoName\">" + expoTheme + "</p>" +
                     "<p class=\"period\">" + beginDate + " - " + endDate + " </p>\n" +
-                    "<form action=\"buy\" method=\"GET\">\n" +
-                    "    <input type=\"hidden\" value=\""+expoTheme+"\" name=\"EXPO\">\n" +
-                    "    <button type=\"buyBtn\"  class=\"price\">" + price + "</button>\n" +
+                    "<form action=\"user-cabinet/buy-ticket-pack\" method=\"GET\">\n" +
+                    "    <input type=\"hidden\" value=\"" + expoTheme + "\" name=\"EXPO\">\n" +
+                    "    <button type=\"buyBtn\"  class=\"price\">" + price + " UAH</button>\n" +
                     "</form>\n" +
                     "</div>");
         } catch (IOException e) {
-
-            e.printStackTrace();
+            logger.error(e);
         }
-
         return SKIP_BODY;
     }
 }

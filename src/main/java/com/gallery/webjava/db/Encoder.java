@@ -1,11 +1,24 @@
 package com.gallery.webjava.db;
 
+
+
+import org.apache.log4j.Logger;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Encoding passwords in MD-5
+ */
 public class Encoder {
+    private static final Logger log = Logger.getLogger(DBManager.class);
+    /**
+     * Encode password into MD-5
+     * @param s password for encoding
+     * @return encoded password
+     */
     public static String encode(String s) {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result= new StringBuilder();
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(s.getBytes());
@@ -18,8 +31,7 @@ public class Encoder {
             }
 
         } catch (NoSuchAlgorithmException e) {
-            System.err.println("cant encode password");
-            e.printStackTrace();
+            log.error("cant encode password. " + e);
             return null;
         }
         return result.toString().toUpperCase();

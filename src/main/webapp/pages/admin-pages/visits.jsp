@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tag" uri="http://tomcat.apache.org/example-taglib" %>
 <%@ page import="com.gallery.webjava.db.entity.Exposition" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.gallery.webjava.db.AdminDAO" %>
@@ -9,6 +10,7 @@
 <fmt:setBundle basename="lang"/>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <head>
         <meta charset="UTF-8">
@@ -37,7 +39,7 @@
                 </a>
             </div>
         </nav>
-        <div class="mainButtons" >
+        <div class="mainButtons">
             <form id="login" action="/gallery/logout">
                 <button class="logout btn" form="login">
                     <fmt:message key="cabinet.logout"/>
@@ -59,25 +61,23 @@
                 <div class="photo"></div>
                 <p class="role">Administrator</p>
                 <a href="#" class="profile-link"><fmt:message key="cabinet.profile"/></a>
-                <a href="http://localhost:8080/gallery/admin/admin-cabinet" class="profile-link"><fmt:message key="admin-cabinet.new-event"/></a>
-                <a href="http://localhost:8080/gallery/admin/admin-cabinet/statistic" class="profile-link"><fmt:message key="admin-cabinet.statistic"/></a>
-                <a href="#" class="profile-link active"><fmt:message key="admin-cabinet.all-events"/></a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet" class="profile-link"><fmt:message
+                        key="admin-cabinet.new-event"/></a>
+                <a href="#" class="profile-link active"><fmt:message key="admin-cabinet.statistic"/></a>
+                <a href="http://localhost:8080/gallery/admin/admin-cabinet/all-expo" class="profile-link"><fmt:message
+                        key="admin-cabinet.all-events"/></a>
             </div>
         </div>
         <div class="cabinet-workingplace">
-            <h1><fmt:message key="admin-cabinet.all-expo-list"/></h1>
+            <h1><fmt:message key="admin-cabinet.visit-statistic"/></h1>
             <%
                 List<Exposition> expositions = new AdminDAO(DBManager.getInstance()).getAllExpositions();
                 request.setAttribute("expositions", expositions);%>
-            <table style="border: 2px solid #8F755D; width: 80%"
+            <table style="border: 2px solid #8F755D; width: 60%"
                    class="table table-striped">
                 <tr>
                     <td><b><fmt:message key="admin-cabinet.theme"/></b></td>
-                    <td><b><fmt:message key="admin-cabinet.halls"/></b></td>
-                    <td><b><fmt:message key="admin-cabinet.price"/></b></td>
-                    <td><b><fmt:message key="admin-cabinet.begin-date"/></b></td>
-                    <td><b><fmt:message key="admin-cabinet.end-date"/></b></td>
-                    <td></td>
+                    <td><b><fmt:message key="admin-cabinet.total-tickets"/></b></td>
                 </tr>
                 <c:forEach items="${expositions}" var="expo">
                     <tr>
@@ -85,25 +85,7 @@
                             <c:out value="${expo.getTheme()}"/>
                         </td>
                         <td>
-                            <c:forEach items="${expo.getHalls()}" var="hall">
-                              <c:out value="${hall.getHallName()}"/><br>
-                            </c:forEach>
-                        </td>
-                        <td>
-                            <c:out value="${expo.getPrice()}"/>
-                        </td>
-                        <td>
-                            <c:out value="${expo.getBegin()}"/>
-                        </td>
-                        <td>
-                            <c:out value="${expo.getEnd()}"/>
-                        </td>
-                        <td>
-                            <form action="all-expo/delete-expo" method="post">
-                                <button class="btn" type="submit" name="expo_id" value="${expo.getId()}">
-                                    <fmt:message key="admin-cabinet.delete"/>
-                                </button>
-                            </form>
+                            <tag:visitors expoId="${expo.getId()}"></tag:visitors>
                         </td>
                     </tr>
                 </c:forEach>

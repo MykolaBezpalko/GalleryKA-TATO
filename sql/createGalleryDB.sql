@@ -37,8 +37,7 @@ id int not null primary key auto_increment,
 name varchar(300) not null,
 start_date date,
 end_date date,
-price int default 0,
-available boolean default true
+price int default 0
 );
 ALTER TABLE description ADD CONSTRAINT exposition_id FOREIGN KEY (exposition_id) REFERENCES exposition(id) on delete cascade;
 
@@ -67,7 +66,7 @@ insert into language (name) values ('english');
 insert into language (name) values ('ukrainian');
 
 insert into admin (name,email,password) values('Default Administrator','admin@admin.com','81DC9BDB52D04DC20036DBD8313ED055');
-insert into user (name,email,password) values('Default User','user@user.com','1234');
+insert into user (name,email,password) values('Default User','user@user.com','81DC9BDB52D04DC20036DBD8313ED055');
 INSERT INTO hall (name) VALUES ('The Great Hall'),('The Grey Hall'),('The Katato Hall');
 INSERT INTO exposition (name,start_date,end_date,price) values 
 	("GRISHIGIANO. Simplicity is the highest form of sophistication", "2021-06-02", "2021-06-12", 500),
@@ -95,5 +94,4 @@ right outer join hall_exposition on hall.id = hall_id
 right outer join exposition  on hall_exposition.exposition_id = exposition.id
 cross join description on exposition.id = description.exposition_id;
 
-select count(*) from exposition;
-select * from exposition limit 0,3;
+select * from exposition order by start_date desc;

@@ -1,6 +1,7 @@
 package com.gallery.webjava.web;
 
 import com.gallery.webjava.db.AdminDAO;
+import com.gallery.webjava.db.DBManager;
 import com.gallery.webjava.db.entity.Administrator;
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
@@ -28,7 +29,7 @@ public class LoginAdmin extends HttpServlet {
         if(session.getAttribute("user") == null){
             writer.println("<html>" +
                     "<body style=\"text-align:center;\">" +
-                    "<h1 style=\" text-align: center\" > You have no acces to this page.</h1>" +
+                    "<h1 style=\" text-align: center\" > You have no access to this page.</h1>" +
                     "<a href=\"http://localhost:8080/gallery/pages/admin-pages/login-as-admin.jsp?\">Please login as administrator</a>" +
                     "<br>" +
                     "<a href=\"http://localhost:8080/gallery\">Back to homepage </a>" +
@@ -62,7 +63,7 @@ public class LoginAdmin extends HttpServlet {
             dispatcher.forward(req, resp);
         } else {
             String password = session.getAttribute("password").toString();
-            Administrator admin = new AdminDAO().getAdmin(email, password);
+            Administrator admin = new AdminDAO(DBManager.getInstance()).getAdmin(email, password);
             session.setAttribute("user", admin);
             if (admin != null) {
                 resp.sendRedirect("/gallery/admin/admin-cabinet");
@@ -75,7 +76,7 @@ public class LoginAdmin extends HttpServlet {
     }
 
     private boolean checkAdmin(String email) {
-        Administrator u = new AdminDAO().getAdminByEmail(email);
+        Administrator u = new AdminDAO(DBManager.getInstance()).getAdminByEmail(email);
         if (u != null) {
             return true;
         }

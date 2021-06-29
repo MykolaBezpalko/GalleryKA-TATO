@@ -1,6 +1,7 @@
 package com.gallery.webjava.web;
 
 import com.gallery.webjava.db.AdminDAO;
+import com.gallery.webjava.db.DBManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,9 +15,7 @@ public class DeleteExpo extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        new AdminDAO().deleteExpo(getIdForDelete(req.getParameter("expo_id")));
-        System.out.println("delete expo servlet works");
-
+        new AdminDAO(DBManager.getInstance()).deleteExpo(getIdForDelete(req.getParameter("expo_id")));
         resp.sendRedirect("http://localhost:8080/gallery/admin/admin-cabinet/all-expo");
 
     }

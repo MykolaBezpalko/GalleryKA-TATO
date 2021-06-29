@@ -1,31 +1,34 @@
 package com.gallery.webjava.web.filter;
 
-import com.gallery.webjava.db.AdminDAO;
-import com.gallery.webjava.db.UserDAO;
-import com.gallery.webjava.db.entity.User;
-import com.sun.deploy.net.HttpRequest;
-import com.sun.deploy.net.HttpResponse;
+
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-@WebFilter(urlPatterns = {"/buy"})
+/**
+ * checking if user in system
+ */
 public class LoginFilter implements Filter {
+    private static final Logger log = Logger.getLogger(LoginFilter.class);
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        log.info("LoginFilter starts working");
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpSession session = req.getSession();
-        if(session.getAttribute("user") == null){
+        if (session.getAttribute("user") == null) {
             resp.sendRedirect("/gallery/login-page");
-        }else
-        filterChain.doFilter(servletRequest,servletResponse);
+            log.error("user is not in system. Made redirect to login-page");
+        } else {
+            log.info("LoginFilter finish work");
+            filterChain.doFilter(servletRequest, servletResponse);
+        }
+
     }
 
 

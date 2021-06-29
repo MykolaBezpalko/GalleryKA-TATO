@@ -1,5 +1,6 @@
 package com.gallery.webjava.web.sorting;
 
+
 import com.gallery.webjava.db.AdminDAO;
 import com.gallery.webjava.db.DBManager;
 import com.gallery.webjava.db.entity.Exposition;
@@ -15,9 +16,8 @@ import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-
-@WebServlet("/pricesorting")
-public class PriceSorting extends HttpServlet {
+@WebServlet("/datesorting")
+public class DateSort extends HttpServlet {
     AdminDAO admin = new AdminDAO(DBManager.getInstance());
     HttpSession session;
     Date today = new Date(new java.util.Date().getTime());
@@ -30,11 +30,11 @@ public class PriceSorting extends HttpServlet {
         session = req.getSession();
         typeSort = req.getParameter("sortType");
         switch (typeSort) {
-            case "minPrice":
-                allExpo = admin.sortedExpoByPriceAsc();
+            case "dateFromBegin":
+                allExpo = admin.sortedExpoByTimeAsc();
                 break;
-            case "maxPrice":
-                allExpo = admin.sortedExpoByPriceDesc();
+            case "dateFromEnd":
+                allExpo = admin.sortedExpoByTimeDesc();
                 break;
         }
         session.setAttribute("allExpo", allExpo);

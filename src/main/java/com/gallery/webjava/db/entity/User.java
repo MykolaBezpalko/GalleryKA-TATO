@@ -1,24 +1,16 @@
 package com.gallery.webjava.db.entity;
 
 public class User extends Entity<Entity> {
-    private Basket basket;
     private Language language;
     private String userName;
     private String password;
     private String email;
 
-    public User() {
-        basket = new Basket(this);
-    }
+    public User() { }
 
     public User(String email, String password) {
-        basket = new Basket(this);
         setEmail(email);
         setEmail(password);
-    }
-
-    public Basket getBasket() {
-        return basket;
     }
 
     public Language getLanguage() {
@@ -49,10 +41,6 @@ public class User extends Entity<Entity> {
         return email;
     }
 
-    public void refreshBasket() {
-        basket.clearBasket
-                ();
-    }
 
     public void setEmail(String email) {
         this.email = email;
@@ -61,7 +49,7 @@ public class User extends Entity<Entity> {
     @Override
     public String toString() {
         return "User{ Id= " + getId() +
-//                ", language= " + language.getLanguageName() +
+//              ", language= " + language.getLanguageName() +
                 ", userName= '" + userName + '\'' +
                 ", email= '" + email + '\'' +
                 '}';
